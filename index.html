@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Firefly + Dahlia AV Timeline Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050816;
+      --panel: rgba(10, 14, 26, 0.82);
+      --panel-strong: rgba(12, 18, 32, 0.9);
+      --border: rgba(255, 255, 255, 0.14);
+      --accent: #f7b733;
+      --accent-soft: rgba(247, 183, 51, 0.14);
+      --accent-strong: rgba(247, 183, 51, 0.4);
+      --teal: #5eead4;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Space Grotesk", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 20px 28px 40px;
+      min-height: 100vh;
+      background:
+        linear-gradient(140deg, rgba(40,46,80,0.6), rgba(52,40,88,0.55) 25%, rgba(36,46,78,0.6) 60%, rgba(28,28,52,0.68)),
+        url('Firefly Valentines.jpg') center/cover fixed;
+      color: var(--text);
+      backdrop-filter: blur(1px);
+      box-shadow: inset 0 0 220px rgba(0,0,0,0.28);
+    }
+    .shell {
+      max-width: 1340px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      position: relative;
+      max-width: 1340px;
+      margin: 0 auto 22px;
+      height: 200px;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 28px 60px rgba(0,0,0,0.55);
+      background:
+        linear-gradient(115deg, rgba(18,22,38,0.78), rgba(12,16,32,0.5)),
+        radial-gradient(circle at 20% 30%, rgba(247,183,51,0.28), transparent 30%),
+        radial-gradient(circle at 85% 40%, rgba(94,234,212,0.22), transparent 32%);
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(0,0,0,0.48), rgba(0,0,0,0.16));
+      z-index: 1;
+      pointer-events: none;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 80% 50%, rgba(0,0,0,0), rgba(5,7,15,0.88)),
+        linear-gradient(160deg, rgba(5,6,10,0.75), rgba(7,8,16,0.2));
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 24px 28px;
+      gap: 6px;
+    }
+    .hero-title {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      text-shadow: 0 8px 22px rgba(0,0,0,0.65);
+    }
+    .hero-title span.emblem {
+      font-size: 0.9rem;
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.4);
+      background: rgba(0,0,0,0.32);
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 100%;
+      white-space: normal;
+      text-shadow: 0 6px 16px rgba(0,0,0,0.55);
+    }
+
+    .panel {
+      background: var(--panel);
+      border-radius: 18px;
+      padding: 18px 20px 20px;
+      box-shadow: 0 22px 48px rgba(0,0,0,0.7);
+      border: 1px solid var(--border);
+      margin-bottom: 20px;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 18% 10%, rgba(247,183,51,0.08), transparent 40%);
+      pointer-events: none;
+    }
+    .panel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 88% 0%, rgba(94,234,212,0.08), transparent 38%);
+      pointer-events: none;
+    }
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    h1 {
+      font-size: 1.6rem;
+      margin: 0 0 0.3rem;
+      letter-spacing: 0.03em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    h1 span.mark {
+      font-size: 0.8rem;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.25);
+      background: rgba(0,0,0,0.35);
+      color: #f7c266;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    .subtitle {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+      max-width: 840px;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: flex-end;
+      background: linear-gradient(120deg, rgba(255,255,255,0.04), rgba(255,255,255,0));
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 240px;
+    }
+    label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+    input[type="number"],
+    input[type="range"] {
+      width: 100%;
+    }
+    input[type="number"] {
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: var(--panel-strong);
+      color: var(--text);
+      font-size: 0.9rem;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    input[type="number"]:focus-visible {
+      outline: 1px solid var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-soft);
+    }
+    input[type="range"] { accent-color: var(--accent); }
+
+    select {
+      padding: 9px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: var(--panel-strong);
+      color: var(--text);
+      font-size: 0.85rem;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    .toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .toggle input { accent-color: var(--accent); }
+
+    .summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .summary-item {
+      background: linear-gradient(135deg, rgba(247,183,51,0.12), rgba(10,12,24,0.92));
+      border-radius: 14px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .summary-label { color: var(--muted); }
+    .summary-value { color: #f7c266; font-weight: 600; }
+
+    .charts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 16px;
+    }
+    .chart-card { flex: 1; min-width: 360px; }
+    .card-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      font-size: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .pill {
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--muted);
+      background: rgba(255,255,255,0.06);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      overflow: hidden;
+      border-radius: 14px;
+    }
+    th, td {
+      padding: 6px 9px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      text-align: left;
+      white-space: nowrap;
+    }
+    th {
+      font-weight: 600;
+      color: #e2e8f0;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: linear-gradient(120deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    }
+    tbody tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+    tbody tr:nth-child(odd) { background: rgba(255,255,255,0.04); }
+    tbody tr:hover { background: rgba(247,183,51,0.12); transition: background 0.2s ease; }
+
+    tr.event-phase td { color: var(--teal); font-weight: 600; }
+    tr.event-eba td:nth-child(2) { color: #facc15; }
+    tr.event-cc td:nth-child(2) { color: #f97316; font-weight: 600; }
+    tr.event-skill td:nth-child(2) { color: #a5b4fc; }
+    tr.event-ult td:nth-child(2) { color: var(--accent); font-weight: 600; }
+
+    /* AV band highlights for Scenario A */
+    tr.range-a0 td { background-color: rgba(56,189,248,0.16); }
+    tr.range-a1 td { background-color: rgba(234,179,8,0.16); }
+    tr.range-a2 td { background-color: rgba(52,211,153,0.16); }
+    tr.range-a3 td { background-color: rgba(251,113,133,0.16); }
+    tr.range-a4 td { background-color: rgba(129,140,248,0.16); }
+
+    /* AV band highlights for Scenario B */
+    tr.range-b0 td { background-color: rgba(56,189,248,0.16); }
+    tr.range-b1 td { background-color: rgba(234,179,8,0.16); }
+    tr.range-b2 td { background-color: rgba(52,211,153,0.16); }
+    tr.range-b3 td { background-color: rgba(251,113,133,0.16); }
+
+    .av-col {
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.82rem;
+    }
+
+    .preset-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .preset-label { margin-right: 4px; }
+    .preset-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.24);
+      background: linear-gradient(120deg, rgba(255,255,255,0.04), rgba(255,255,255,0.08));
+      color: var(--text);
+      padding: 6px 12px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+      letter-spacing: 0.01em;
+    }
+    .preset-btn:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-soft);
+      transform: translateY(-1px);
+    }
+    .preset-btn:active {
+      transform: translateY(0);
+    }
+    .divider {
+      border: none;
+      border-top: 1px solid rgba(31,41,55,0.9);
+      margin: 12px 0;
+    }
+
+    .panel-pin {
+      border: 1px solid rgba(255,255,255,0.2);
+      background: linear-gradient(120deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      color: var(--text);
+      border-radius: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      transition: all 0.15s ease;
+    }
+    .panel-pin:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-soft);
+      transform: translateY(-1px);
+    }
+    .panel-pin:active {
+      transform: translateY(0);
+    }
+    .av-panel.pinned .panel-pin {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-soft);
+      background: linear-gradient(120deg, rgba(247,183,51,0.16), rgba(255,255,255,0.08));
+    }
+    .av-panel.pinned {
+      position: sticky;
+      top: 0;
+      z-index: 998;
+      box-shadow: 0 24px 48px rgba(0,0,0,0.65);
+      padding: 10px 14px;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+    .av-panel.pinned .panel-header { margin-bottom: 6px; }
+    .av-panel.pinned h1 { margin: 0; font-size: 1.3rem; text-shadow: 0 6px 14px rgba(0,0,0,0.55); font-weight: 700; }
+    .av-panel.pinned .subtitle { display: none; }
+    .av-panel.pinned .controls { padding: 8px; gap: 10px; }
+    .av-panel.pinned .control-group { min-width: 200px; }
+    .av-panel.pinned .summary { display: none; }
+    .hero.hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-title">
+        Stellaron Hunter // Firefly
+        <span class="emblem">Turn timeline</span>
+      </div>
+      <div class="hero-sub">
+        See how Firefly's AV ticks line up with Dahlia, Ruan Mei and DDD at a chosen sheet SPD. Tables show every Skill and EBA in this phase.
+      </div>
+    </div>
+  </div>
+
+  <div class="shell">
+    <div class="panel av-panel">
+      <div class="panel-header">
+        <div>
+          <h1>
+            AV calculator
+            <span class="mark">Complete Combustion</span>
+          </h1>
+          <div class="subtitle">
+            Adjust Firefly's SPD and buffs to see her AV timeline for this phase.
+          </div>
+        </div>
+        <button class="panel-pin" id="pinToggleBtn">Freeze panel</button>
+      </div>
+
+      <div class="controls">
+        <div class="control-group">
+          <label for="spdNumber">Firefly out of combat SPD</label>
+          <input id="spdNumber" type="number" step="0.1" min="80" max="250" value="178.4" />
+          <input id="spdSlider" type="range" step="0.1" min="80" max="250" value="178.4" />
+        </div>
+        <div class="control-group">
+          <label>Team buffs</label>
+          <div class="toggle">
+            <input id="rmToggle" type="checkbox" />
+            <span>Ruan Mei field (+10.4 SPD)</span>
+          </div>
+          <div class="toggle">
+            <input id="dahliaToggle" type="checkbox" checked />
+            <span>Dahlia A4 (+31.2 SPD from base 104)</span>
+          </div>
+          <div class="toggle">
+            <span># of DDD procs per ult</span>
+            <select id="dddSelect">
+              <option value="0">0 DDD</option>
+              <option value="1">1 DDD</option>
+              <option value="2">2 DDD</option>
+              <option value="3">3 DDD</option>
+              <option value="4">4 DDD</option>
+            </select>
+            <span style="font-size:0.75rem; color: var(--muted);">(procs are shown only on EBA 2 in the charts for simplicity)</span>
+          </div>
+        </div>
+      </div>
+      <div class="summary">
+        <div class="summary-item" id="summarySpd"></div>
+        <div class="summary-item" id="summaryAv"></div>
+      </div>
+    </div>
+
+    <div class="charts">
+      <div class="panel chart-card">
+        <div class="card-title">
+          <span>Scenario A</span>
+          <span class="pill">Think MoC phase 2</span>
+        </div>
+        <div class="card-sub">
+          Firefly starts this phase already in CC.
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Event</th>
+              <th>AV</th>
+            </tr>
+          </thead>
+          <tbody id="tableA"></tbody>
+        </table>
+      </div>
+
+      <div class="panel chart-card">
+        <div class="card-title">
+          <span>Scenario B</span>
+          <span class="pill">Think Anomaly Arbitration</span>
+        </div>
+        <div class="card-sub">
+          Firefly starts out of CC, uses a Skill, then ults.
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Event</th>
+              <th>AV</th>
+            </tr>
+          </thead>
+          <tbody id="tableB"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="card-title">
+        <span>Speed Breakpoints</span>
+        <span class="pill">AV vs sheet SPD</span>
+      </div>
+      <div class="card-sub">
+        Choose target AVs and a sheet SPD range. Each table shows which SPD bands give different EBA / Skill patterns before that AV.
+      </div>
+      <div class="controls" style="margin-bottom: 10px;">
+        <div class="control-group">
+          <label for="targetAvInputA">Scenario A target AV (MoC)</label>
+          <input id="targetAvInputA" type="number" step="1" min="50" max="600" value="150" />
+        </div>
+        <div class="control-group">
+          <label for="targetAvInputB">Scenario B target AV (AA)</label>
+          <input id="targetAvInputB" type="number" step="1" min="50" max="600" value="300" />
+        </div>
+        <div class="control-group">
+          <label>Sheet SPD scan range</label>
+          <div style="display:flex; gap:8px;">
+            <input id="invMinSpd" type="number" step="0.1" min="80" max="260" value="104" />
+            <input id="invMaxSpd" type="number" step="0.1" min="80" max="260" value="220" />
+          </div>
+        </div>
+      </div>
+      <div class="preset-row">
+        <span class="preset-label">MoC presets (Scenario A):</span>
+        <button class="preset-btn preset-a" data-av="150">MoC 0 Cycle (150)</button>
+        <button class="preset-btn preset-a" data-av="250">MoC 1 Cycle (250)</button>
+        <button class="preset-btn preset-a" data-av="350">MoC 2 Cycle (350)</button>
+      </div>
+      <div class="preset-row">
+        <span class="preset-label">AA presets (Scenario B):</span>
+        <button class="preset-btn preset-b" data-av="300">AA 0 Cycle (300)</button>
+        <button class="preset-btn preset-b" data-av="400">AA 1 Cycle (400)</button>
+        <button class="preset-btn preset-b" data-av="500">AA 2 Cycle (500)</button>
+      </div>
+      <hr class="divider" />
+      <div class="charts">
+        <div class="chart-card">
+          <div class="card-title">
+            <span>Scenario A</span>
+            <span class="pill">Think MoC phase 2</span>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Out of combat SPD</th>
+                <th>Total EBA / Skill</th>
+                <th>Pattern up to target AV</th>
+              </tr>
+            </thead>
+            <tbody id="invTableA"></tbody>
+          </table>
+        </div>
+        <div class="chart-card">
+          <div class="card-title">
+            <span>Scenario B</span>
+            <span class="pill">Think Anomaly Arbitration</span>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Out of combat SPD</th>
+                <th>Total EBA / Skill</th>
+                <th>Pattern up to target AV</th>
+              </tr>
+            </thead>
+            <tbody id="invTableB"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const BASE_SPD = 104;
+    const DAHLIA_FLAT = 0.3 * BASE_SPD; // 31.2
+    const RM_FLAT = 0.1 * BASE_SPD;     // 10.4
+    const CC_TIMER_AV = 10000 / 70;     // ~142.857
+    const MAX_AV = 500;
+
+    const spdNumber = document.getElementById('spdNumber');
+    const spdSlider = document.getElementById('spdSlider');
+    const rmToggle = document.getElementById('rmToggle');
+    const dahliaToggle = document.getElementById('dahliaToggle');
+    const dddSelect = document.getElementById('dddSelect');
+    const tableA = document.getElementById('tableA');
+    const tableB = document.getElementById('tableB');
+    const summarySpd = document.getElementById('summarySpd');
+    const summaryAv = document.getElementById('summaryAv');
+
+    const targetAvInputA = document.getElementById('targetAvInputA');
+    const targetAvInputB = document.getElementById('targetAvInputB');
+    const invMinSpdInput = document.getElementById('invMinSpd');
+    const invMaxSpdInput = document.getElementById('invMaxSpd');
+    const invTableA = document.getElementById('invTableA');
+    const invTableB = document.getElementById('invTableB');
+    const presetButtonsA = document.querySelectorAll('.preset-btn.preset-a');
+    const presetButtonsB = document.querySelectorAll('.preset-btn.preset-b');
+    const pinToggleBtn = document.getElementById('pinToggleBtn');
+    const avPanel = document.querySelector('.av-panel');
+    const hero = document.querySelector('.hero');
+    let panelPinned = false;
+
+    function fmt(x) {
+      return x.toFixed(2);
+    }
+
+    function buildRow(n, event, av, cls) {
+      return { n, event, av, cls: cls || '' };
+    }
+
+    function getDDDLevel() {
+      const v = parseInt(dddSelect.value, 10);
+      if (isNaN(v)) return 0;
+      return Math.min(4, Math.max(0, v));
+    }
+
+    function getSpeedProfile(sheetSpd) {
+      let spdOut = sheetSpd;
+      if (dahliaToggle.checked) spdOut += DAHLIA_FLAT;
+      if (rmToggle.checked) spdOut += RM_FLAT;
+      const spdCC = spdOut + 60;
+      return {
+        spdOut,
+        spdCC,
+        baseAVOut: 10000 / spdOut,
+        baseAVCC: 10000 / spdCC,
+      };
+    }
+
+    function getRangeClass(av, scenario) {
+      if (typeof av !== 'number' || isNaN(av)) return '';
+      if (scenario === 'A') {
+        if (av <= 150) return 'range-a0';
+        if (av > 150 && av <= 250) return 'range-a1';
+        if (av > 250 && av <= 350) return 'range-a2';
+        if (av > 350 && av <= 450) return 'range-a3';
+        if (av > 450 && av <= 550) return 'range-a4';
+      } else if (scenario === 'B') {
+        if (av <= 300) return 'range-b0';
+        if (av > 300 && av <= 400) return 'range-b1';
+        if (av > 400 && av <= 500) return 'range-b2';
+        if (av > 500 && av <= 600) return 'range-b3';
+      }
+      return '';
+    }
+
+    function describePattern(events, targetAv) {
+      if (!events.length) {
+        return `No EBA / Skill before AV ${fmt(targetAv)}`;
+      }
+      const groups = [];
+      let last = events[0];
+      let count = 1;
+      for (let i = 1; i < events.length; i++) {
+        if (events[i] === last) {
+          count++;
+        } else {
+          groups.push({ type: last, count });
+          last = events[i];
+          count = 1;
+        }
+      }
+      groups.push({ type: last, count });
+
+      return groups
+        .map(g => {
+          if (g.type === 'E') {
+            return `${g.count} EBA`;
+          }
+          return `${g.count} Skill`;
+        })
+        .join(' ');
+    }
+
+    function patternScenarioA(sheetSpd, targetAv) {
+      const { spdOut, spdCC, baseAVOut, baseAVCC } = getSpeedProfile(sheetSpd);
+      const ddd = getDDDLevel();
+      const events = [];
+      const eps = 1e-6;
+
+      // First CC cycle at AV 0
+      let ccStart = 0;
+      let ccEnd = ccStart + CC_TIMER_AV;
+      let currentActAv = ccStart;
+      let lastCCActionAv = 0;
+      let eIndex = 1;
+
+      while (true) {
+        let delta = baseAVCC;
+        if (ddd > 0 && eIndex === 2) {
+          delta = baseAVCC * (1 - 0.24 * ddd);
+        }
+        const next = currentActAv + delta;
+        if (next >= ccEnd - eps) break;
+        if (next <= targetAv + eps) events.push('E');
+        lastCCActionAv = next;
+        currentActAv = next;
+        eIndex++;
+      }
+
+      if (!lastCCActionAv) return events;
+
+      let passed = ccEnd - lastCCActionAv;
+      let remainingOld = Math.max(0, baseAVCC - passed);
+      let scale = spdCC / spdOut;
+      let newRemaining = remainingOld * scale;
+      let skillTime = ccEnd + newRemaining;
+      if (skillTime <= targetAv + eps) {
+        events.push('N');
+      } else {
+        return events;
+      }
+
+      while (true) {
+        const ccStartLoop = skillTime;
+        const ccEndLoop = ccStartLoop + CC_TIMER_AV;
+
+        if (ccStartLoop <= targetAv + eps) {
+          events.push('E'); // Ult & EBA 1
+        } else {
+          break;
+        }
+
+        let currentActAvLoop = ccStartLoop;
+        let lastCCActionAvLoop = ccStartLoop;
+        let eIndexLoop = 2;
+
+        while (true) {
+          let deltaLoop = baseAVCC;
+          if (ddd > 0 && eIndexLoop === 2) {
+            deltaLoop = baseAVCC * (1 - 0.24 * ddd);
+          }
+          const nextLoop = currentActAvLoop + deltaLoop;
+          if (nextLoop >= ccEndLoop - eps) break;
+          if (nextLoop <= targetAv + eps) events.push('E');
+          lastCCActionAvLoop = nextLoop;
+          currentActAvLoop = nextLoop;
+          eIndexLoop++;
+        }
+
+        const passedLoop = ccEndLoop - lastCCActionAvLoop;
+        const remainingOldLoop = Math.max(0, baseAVCC - passedLoop);
+        const scaleLoop = spdCC / spdOut;
+        const newRemainingLoop = remainingOldLoop * scaleLoop;
+        const nextSkillTime = ccEndLoop + newRemainingLoop;
+
+        if (nextSkillTime <= targetAv + eps) {
+          events.push('N');
+          skillTime = nextSkillTime;
+        } else {
+          break;
+        }
+      }
+
+      return events;
+    }
+
+    function patternScenarioB(sheetSpd, targetAv) {
+      const { spdOut, spdCC, baseAVOut, baseAVCC } = getSpeedProfile(sheetSpd);
+      const ddd = getDDDLevel();
+      const events = [];
+      const eps = 1e-6;
+
+      // Opening Skill out of CC
+      const skill1Av = baseAVOut;
+      if (skill1Av <= targetAv + eps) events.push('N');
+
+      // First CC cycle
+      let ccStart = skill1Av;
+      let ccEnd = ccStart + CC_TIMER_AV;
+      if (ccStart <= targetAv + eps) events.push('E'); // Ult & EBA 1
+
+      let currentActAv = ccStart;
+      let lastCCActionAv = ccStart;
+      let eIndex = 2;
+
+      while (true) {
+        let delta = baseAVCC;
+        if (ddd > 0 && eIndex === 2) {
+          delta = baseAVCC * (1 - 0.24 * ddd);
+        }
+        const next = currentActAv + delta;
+        if (next >= ccEnd - eps) break;
+        if (next <= targetAv + eps) events.push('E');
+        lastCCActionAv = next;
+        currentActAv = next;
+        eIndex++;
+      }
+
+      let passed = ccEnd - lastCCActionAv;
+      let remainingOld = Math.max(0, baseAVCC - passed);
+      let scale = spdCC / spdOut;
+      let newRemaining = remainingOld * scale;
+      let skillTime = ccEnd + newRemaining;
+      if (skillTime <= targetAv + eps) {
+        events.push('N');
+      } else {
+        return events;
+      }
+
+      while (true) {
+        const ccStartLoop = skillTime;
+        const ccEndLoop = ccStartLoop + CC_TIMER_AV;
+
+        if (ccStartLoop <= targetAv + eps) {
+          events.push('E'); // Ult & EBA 1
+        } else {
+          break;
+        }
+
+        let currentActAvLoop = ccStartLoop;
+        let lastCCActionAvLoop = ccStartLoop;
+        let eIndexLoop = 2;
+
+        while (true) {
+          let deltaLoop = baseAVCC;
+          if (ddd > 0 && eIndexLoop === 2) {
+            deltaLoop = baseAVCC * (1 - 0.24 * ddd);
+          }
+          const nextLoop = currentActAvLoop + deltaLoop;
+          if (nextLoop >= ccEndLoop - eps) break;
+          if (nextLoop <= targetAv + eps) events.push('E');
+          lastCCActionAvLoop = nextLoop;
+          currentActAvLoop = nextLoop;
+          eIndexLoop++;
+        }
+
+        const passedLoop = ccEndLoop - lastCCActionAvLoop;
+        const remainingOldLoop = Math.max(0, baseAVCC - passedLoop);
+        const scaleLoop = spdCC / spdOut;
+        const newRemainingLoop = remainingOldLoop * scaleLoop;
+        const nextSkillTime = ccEndLoop + newRemainingLoop;
+
+        if (nextSkillTime <= targetAv + eps) {
+          events.push('N');
+          skillTime = nextSkillTime;
+        } else {
+          break;
+        }
+      }
+
+      return events;
+    }
+
+    function buildRanges(minSpd, maxSpd, targetAv, scenario) {
+      const ranges = [];
+      const step = 0.1;
+      const eps = 1e-6;
+
+      function patternAt(spd) {
+        const events = scenario === 'A'
+          ? patternScenarioA(spd, targetAv)
+          : patternScenarioB(spd, targetAv);
+        const pattern = describePattern(events, targetAv);
+        let eCount = 0;
+        let nCount = 0;
+        for (const ev of events) {
+          if (ev === 'E') eCount++;
+          else if (ev === 'N') nCount++;
+        }
+        return { pattern, eCount, nCount };
+      }
+
+      let current = null;
+      let startSpd = null;
+
+      for (let spd = minSpd; spd <= maxSpd + eps; spd += step) {
+        const spdRounded = parseFloat(spd.toFixed(1));
+        const pat = patternAt(spdRounded);
+        if (current === null) {
+          current = pat;
+          startSpd = spdRounded;
+        } else if (pat.pattern !== current.pattern || pat.eCount !== current.eCount || pat.nCount !== current.nCount) {
+          const prevSpd = parseFloat((spdRounded - step).toFixed(1));
+          ranges.push({
+            start: startSpd,
+            end: prevSpd,
+            pattern: current.pattern,
+            eCount: current.eCount,
+            nCount: current.nCount,
+          });
+          current = pat;
+          startSpd = spdRounded;
+        }
+      }
+
+      if (current !== null && startSpd !== null) {
+        const maxRounded = parseFloat(maxSpd.toFixed(1));
+        ranges.push({
+          start: startSpd,
+          end: maxRounded,
+          pattern: current.pattern,
+          eCount: current.eCount,
+          nCount: current.nCount,
+        });
+      }
+
+      return ranges;
+    }
+
+    function formatRange(range, maxSpd) {
+      const start = range.start.toFixed(1);
+      const end = range.end.toFixed(1);
+      const eps = 1e-6;
+      if (range.end >= maxSpd - eps) {
+        return `${start}`;
+      }
+      return `${start} - ${end}`;
+    }
+
+    function runInverse() {
+      let targetAvA = parseFloat(targetAvInputA.value);
+      if (isNaN(targetAvA) || targetAvA <= 0) targetAvA = 150;
+
+      let targetAvB = parseFloat(targetAvInputB.value);
+      if (isNaN(targetAvB) || targetAvB <= 0) targetAvB = 300;
+
+      let minSpd = parseFloat(invMinSpdInput.value);
+      let maxSpd = parseFloat(invMaxSpdInput.value);
+      if (isNaN(minSpd)) minSpd = 104;
+      if (isNaN(maxSpd)) maxSpd = 220;
+      if (maxSpd < minSpd + 0.1) maxSpd = minSpd + 0.1;
+
+      const rangesA = buildRanges(minSpd, maxSpd, targetAvA, 'A');
+      const rangesB = buildRanges(minSpd, maxSpd, targetAvB, 'B');
+
+      invTableA.innerHTML = rangesA
+        .map((r, idx) => `
+          <tr>
+            <td class="av-col">${formatRange(r, maxSpd)}</td>
+            <td>${r.eCount} EBA / ${r.nCount} Skill</td>
+            <td>${r.pattern}</td>
+          </tr>
+        `)
+        .join('');
+
+      invTableB.innerHTML = rangesB
+        .map((r, idx) => `
+          <tr>
+            <td class="av-col">${formatRange(r, maxSpd)}</td>
+            <td>${r.eCount} EBA / ${r.nCount} Skill</td>
+            <td>${r.pattern}</td>
+          </tr>
+        `)
+        .join('');
+    }
+
+    function calculate() {
+      let S = parseFloat(spdNumber.value);
+      if (isNaN(S) || S <= 0) S = 178.4;
+
+      let spdOut = S;
+      if (dahliaToggle.checked) spdOut += DAHLIA_FLAT;
+      if (rmToggle.checked) spdOut += RM_FLAT;
+
+      let spdCC = spdOut + 60;
+
+      const baseAVOut = 10000 / spdOut;
+      const baseAVCC = 10000 / spdCC;
+      const ddd = getDDDLevel();
+      const eps = 1e-6;
+
+      summarySpd.innerHTML = `
+        <span class="summary-label">SPD</span>
+        <span class="summary-value">out: ${fmt(spdOut)}</span>
+        <span class="summary-label">/ in CC: </span>
+        <span class="summary-value">${fmt(spdCC)}</span>
+      `;
+      summaryAv.innerHTML = `
+        <span class="summary-label">AV per turn</span>
+        <span class="summary-value">out: ${fmt(baseAVOut)}</span>
+        <span class="summary-label">/ in CC: </span>
+        <span class="summary-value">${fmt(baseAVCC)}</span>
+        <span class="summary-label">CC timer: </span>
+        <span class="summary-value">${fmt(CC_TIMER_AV)}</span>
+      `;
+
+      // Scenario A
+      const rowsA = [];
+      let idxA = 1;
+      rowsA.push(buildRow(idxA++, 'Phase start (CC)', 0, 'event-phase'));
+
+      let ccStart = 0;
+      let ccEnd = ccStart + CC_TIMER_AV;
+      let currentActAv = ccStart;
+      let lastCCActionAv = 0;
+      let eIndex = 1;
+
+      while (true) {
+        let delta = baseAVCC;
+        if (ddd > 0 && eIndex === 2) {
+          delta = baseAVCC * (1 - 0.24 * ddd);
+        }
+        const next = currentActAv + delta;
+        if (next >= ccEnd - eps) break;
+        rowsA.push(buildRow(idxA++, `EBA ${eIndex}`, next, 'event-eba'));
+        lastCCActionAv = next;
+        currentActAv = next;
+        eIndex++;
+      }
+      rowsA.push(buildRow(idxA++, 'CC ends', ccEnd, 'event-cc'));
+
+      let skillIndexA = 0;
+      let postCCSkillTimeA = null;
+      if (lastCCActionAv > 0) {
+        const passed = ccEnd - lastCCActionAv;
+        const remainingOld = Math.max(0, baseAVCC - passed);
+        const scale = spdCC / spdOut;
+        const newRemaining = remainingOld * scale;
+        postCCSkillTimeA = ccEnd + newRemaining;
+        skillIndexA++;
+        rowsA.push(buildRow(idxA++, `Skill ${skillIndexA} (post-CC)`, postCCSkillTimeA, 'event-skill'));
+      }
+
+      let cycleA = 2;
+      let loopSkillTimeA = postCCSkillTimeA;
+
+      while (loopSkillTimeA != null) {
+        rowsA.push(buildRow(idxA++, `Ult & EBA 1 (ult ${cycleA})`, loopSkillTimeA, 'event-ult'));
+
+        ccStart = loopSkillTimeA;
+        ccEnd = ccStart + CC_TIMER_AV;
+
+        let currentActAvLoop = ccStart;
+        let lastCCActionAvLoop = ccStart;
+        let eIndexLoop = 2;
+
+        while (true) {
+          let deltaLoop = baseAVCC;
+          if (ddd > 0 && eIndexLoop === 2) {
+            deltaLoop = baseAVCC * (1 - 0.24 * ddd);
+          }
+          const nextLoop = currentActAvLoop + deltaLoop;
+          if (nextLoop >= ccEnd - eps) break;
+          rowsA.push(buildRow(idxA++, `EBA ${eIndexLoop}`, nextLoop, 'event-eba'));
+          lastCCActionAvLoop = nextLoop;
+          currentActAvLoop = nextLoop;
+          eIndexLoop++;
+        }
+        rowsA.push(buildRow(idxA++, 'CC ends', ccEnd, 'event-cc'));
+
+        const passedLoop = ccEnd - lastCCActionAvLoop;
+        const remainingOldLoop = Math.max(0, baseAVCC - passedLoop);
+        const scaleLoop = spdCC / spdOut;
+        const newRemainingLoop = remainingOldLoop * scaleLoop;
+        loopSkillTimeA = ccEnd + newRemainingLoop;
+        skillIndexA++;
+        rowsA.push(buildRow(idxA++, `Skill ${skillIndexA} (post-CC)`, loopSkillTimeA, 'event-skill'));
+
+        if (loopSkillTimeA > MAX_AV) {
+          break;
+        }
+
+        cycleA++;
+      }
+
+      // Scenario B
+      const rowsB = [];
+      let idxB = 1;
+      rowsB.push(buildRow(idxB++, 'Phase start (no CC)', 0, 'event-phase'));
+
+      const skill1Av = baseAVOut;
+      let skillIndexB = 0;
+      skillIndexB++;
+      rowsB.push(buildRow(idxB++, `Skill ${skillIndexB} (opening)`, skill1Av, 'event-skill'));
+
+      let ccStartB = skill1Av;
+      let ccEndB = ccStartB + CC_TIMER_AV;
+      rowsB.push(buildRow(idxB++, 'Ult & EBA 1 (ult 1)', ccStartB, 'event-ult'));
+
+      let currentActAvB = ccStartB;
+      let lastCCActionAvB = ccStartB;
+      let eIndexB = 2;
+      let currentAvB;
+
+      while (true) {
+        let deltaB = baseAVCC;
+        if (ddd > 0 && eIndexB === 2) {
+          deltaB = baseAVCC * (1 - 0.24 * ddd);
+        }
+        const nextB = currentActAvB + deltaB;
+        if (nextB >= ccEndB - eps) break;
+        rowsB.push(buildRow(idxB++, `EBA ${eIndexB}`, nextB, 'event-eba'));
+        lastCCActionAvB = nextB;
+        currentActAvB = nextB;
+        eIndexB++;
+      }
+      rowsB.push(buildRow(idxB++, 'CC ends', ccEndB, 'event-cc'));
+
+      let postCCSkillTimeB = null;
+      if (lastCCActionAvB > 0) {
+        const passedB = ccEndB - lastCCActionAvB;
+        const remainingOldB = Math.max(0, baseAVCC - passedB);
+        const scaleB = spdCC / spdOut;
+        const newRemainingB = remainingOldB * scaleB;
+        postCCSkillTimeB = ccEndB + newRemainingB;
+        skillIndexB++;
+        rowsB.push(buildRow(idxB++, `Skill ${skillIndexB} (post-CC)`, postCCSkillTimeB, 'event-skill'));
+      }
+
+      let cycleB = 2;
+      let loopSkillTimeB = postCCSkillTimeB;
+
+      while (loopSkillTimeB != null) {
+        rowsB.push(buildRow(idxB++, `Ult & EBA 1 (ult ${cycleB})`, loopSkillTimeB, 'event-ult'));
+
+        ccStartB = loopSkillTimeB;
+        ccEndB = ccStartB + CC_TIMER_AV;
+
+        let currentActAvLoopB = ccStartB;
+        let lastCCActionAvLoopB = ccStartB;
+        let eIndexLoopB = 2;
+
+        while (true) {
+          let deltaLoopB = baseAVCC;
+          if (ddd > 0 && eIndexLoopB === 2) {
+            deltaLoopB = baseAVCC * (1 - 0.24 * ddd);
+          }
+          const nextLoopB = currentActAvLoopB + deltaLoopB;
+          if (nextLoopB >= ccEndB - eps) break;
+          rowsB.push(buildRow(idxB++, `EBA ${eIndexLoopB}`, nextLoopB, 'event-eba'));
+          lastCCActionAvLoopB = nextLoopB;
+          currentActAvLoopB = nextLoopB;
+          eIndexLoopB++;
+        }
+        rowsB.push(buildRow(idxB++, 'CC ends', ccEndB, 'event-cc'));
+
+        const passedLoopB = ccEndB - lastCCActionAvLoopB;
+        const remainingOldLoopB = Math.max(0, baseAVCC - passedLoopB);
+        const scaleLoopB = spdCC / spdOut;
+        const newRemainingLoopB = remainingOldLoopB * scaleLoopB;
+        loopSkillTimeB = ccEndB + newRemainingLoopB;
+        skillIndexB++;
+        rowsB.push(buildRow(idxB++, `Skill ${skillIndexB} (post-CC)`, loopSkillTimeB, 'event-skill'));
+
+        if (loopSkillTimeB > MAX_AV) {
+          break;
+        }
+
+        cycleB++;
+      }
+
+      tableA.innerHTML = rowsA
+        .map(r => {
+          const band = getRangeClass(r.av, 'A');
+          return `<tr class="${r.cls} ${band}"><td>${r.n}</td><td>${r.event}</td><td class="av-col">${fmt(r.av)}</td></tr>`;
+        })
+        .join('');
+
+      tableB.innerHTML = rowsB
+        .map(r => {
+          const band = getRangeClass(r.av, 'B');
+          return `<tr class="${r.cls} ${band}"><td>${r.n}</td><td>${r.event}</td><td class="av-col">${fmt(r.av)}</td></tr>`;
+        })
+        .join('');
+
+      runInverse();
+    }
+
+    spdNumber.addEventListener('input', () => {
+      spdSlider.value = spdNumber.value;
+      calculate();
+    });
+    spdSlider.addEventListener('input', () => {
+      spdNumber.value = spdSlider.value;
+      calculate();
+    });
+    rmToggle.addEventListener('change', calculate);
+    dahliaToggle.addEventListener('change', calculate);
+    dddSelect.addEventListener('change', calculate);
+
+    targetAvInputA.addEventListener('input', runInverse);
+    targetAvInputB.addEventListener('input', runInverse);
+    invMinSpdInput.addEventListener('input', runInverse);
+    invMaxSpdInput.addEventListener('input', runInverse);
+
+    presetButtonsA.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const av = parseFloat(btn.getAttribute('data-av'));
+        if (!isNaN(av)) {
+          targetAvInputA.value = av;
+          runInverse();
+        }
+      });
+    });
+
+    presetButtonsB.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const av = parseFloat(btn.getAttribute('data-av'));
+        if (!isNaN(av)) {
+          targetAvInputB.value = av;
+          runInverse();
+        }
+      });
+    });
+
+    function applyPinState() {
+      if (!avPanel) return;
+      if (panelPinned) {
+        avPanel.classList.add('pinned');
+        if (hero) hero.classList.add('hidden');
+        pinToggleBtn.textContent = 'Unfreeze panel';
+      } else {
+        avPanel.classList.remove('pinned');
+        if (hero) hero.classList.remove('hidden');
+        pinToggleBtn.textContent = 'Freeze panel';
+      }
+    }
+
+    if (pinToggleBtn) {
+      pinToggleBtn.addEventListener('click', () => {
+        panelPinned = !panelPinned;
+        applyPinState();
+      });
+    }
+
+    calculate();
+    applyPinState();
+  </script>
+</body>
+</html>
+
