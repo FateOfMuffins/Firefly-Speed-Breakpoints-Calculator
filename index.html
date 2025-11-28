@@ -220,9 +220,9 @@
       flex: 0 0 auto;
     }
     .control-group.spd-group { flex: 0 0 260px; }
-    .control-group.buff-group { flex: 0 0 180px; gap: 20px; }
+    .control-group.buff-group { flex: 0 0 170px; gap: 20px; }
     .control-group.e5-group { flex: 0 0 180px; gap: 10px; }
-    .control-group.ddd-group { flex: 0 0 340px; }
+    .control-group.ddd-group { flex: 0 0 280px; }
     .toggle-row {
       display: flex;
       gap: 12px;
@@ -328,10 +328,10 @@
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
       height: 100%;
       display: grid;
-      grid-template-columns: 1fr 180px;
+      grid-template-columns: 1.2fr 0.8fr;
       grid-template-rows: auto 1fr;
       gap: 10px;
-      align-items: start;
+      align-items: stretch;
       position: relative;
     }
     .mini-panel-header {
@@ -357,7 +357,7 @@
       width: 100%;
     }
     .e5-group select { width: 100%; }
-    .phainon-select { width: 100%; height: 24px; }
+    .phainon-select { width: 90px; height: 32px; }
     .ddd-adv {
       border: 1px solid var(--control-border);
       border-radius: 10px;
@@ -377,7 +377,7 @@
       transition: border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
       align-self: stretch;
       justify-content: center;
-      width: 180px;
+      width: 120px;
       grid-column: 2;
       grid-row: 1 / span 2;
       height: 100%;
@@ -387,13 +387,14 @@
       box-shadow: 0 0 0 2px var(--accent-soft);
       color: var(--text);
     }
+    .ddd-adv-line { display: block; line-height: 1.1; }
     .ddd-gear { font-size: 1.2rem; }
     .muted-inline {
       font-size: 0.75rem;
       color: #ffffff;
       white-space: nowrap;
     }
-    .phainon-select { padding: 6px 10px; height: 32px; width: 120px; }
+    .phainon-select { padding: 6px 10px; height: 32px; width: 90px; }
     .toggle input { accent-color: var(--accent); }
 
     .summary {
@@ -504,8 +505,8 @@
 
     .preset-row {
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+      flex-wrap: nowrap;
+      gap: 10px;
       margin-top: 8px;
       align-items: center;
       font-size: 0.78rem;
@@ -513,16 +514,19 @@
     }
     .inv-target { width: 220px; }
     .inv-target-input { max-width: 180px; }
-    .preset-label { margin-right: 4px; }
+    .preset-label { margin-right: 4px; min-width: 190px; display: inline-block; }
     .preset-btn {
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.24);
-      background: linear-gradient(120deg, rgba(255,255,255,0.04), rgba(255,255,255,0.08));
+      border-radius: 12px;
+      border: 1px solid var(--control-border);
+      background: linear-gradient(135deg, var(--control), var(--control-strong));
       color: var(--text);
-      padding: 6px 12px;
-      font-size: 0.78rem;
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      min-width: 160px;
+      flex: 0 0 160px;
+      text-align: center;
       cursor: pointer;
-      transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+      transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease, color 0.12s ease;
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
       letter-spacing: 0.01em;
     }
@@ -790,7 +794,7 @@
         <span class="emblem">Turn timeline</span>
       </div>
       <div class="hero-sub">
-        See how Firefly's AV ticks line up with Dahlia, Ruan Mei and DDD at a chosen sheet SPD. Tables show every Skill and EBA in this phase.
+        This is a calculator for Firefly's speed breakpoints now that Dahlia is a thing! Play around with the settings and see exactly when Firefly takes actions
       </div>
     </div>
   </div>
@@ -852,26 +856,26 @@
           </div>
           <div class="control-group ddd-group">
             <div class="mini-panel">
-              <div class="mini-panel-header buff-title">DDD Procs Per Ult</div>
+              <div class="mini-panel-header buff-title">DDD Proc's Per Ult</div>
               <div class="ddd-row">
                 <div class="ddd-column">
                   <select id="dddSelect" data-visible-rows="6">
-                    <option value="0">0 DDD Procs</option>
+                    <option value="0">0 DDD Proc's</option>
                     <option value="1">1 DDD Proc</option>
-                    <option value="2">2 DDD Procs</option>
-                    <option value="3">3 DDD Procs</option>
-                    <option value="4">4 DDD Procs</option>
-                    <option value="5">5 DDD Procs</option>
-                    <option value="6">6 DDD Procs</option>
-                    <option value="7">7 DDD Procs</option>
-                    <option value="8">8 DDD Procs</option>
-                    <option value="9">9 DDD Procs</option>
-                    <option value="10">10 DDD Procs</option>
-                    <option value="11">11 DDD Procs</option>
-                    <option value="12">12 DDD Procs</option>
-                    <option value="13">13 DDD Procs</option>
-                    <option value="14">14 DDD Procs</option>
-                    <option value="15">15 DDD Procs</option>
+                    <option value="2">2 DDD Proc's</option>
+                    <option value="3">3 DDD Proc's</option>
+                    <option value="4">4 DDD Proc's</option>
+                    <option value="5">5 DDD Proc's</option>
+                    <option value="6">6 DDD Proc's</option>
+                    <option value="7">7 DDD Proc's</option>
+                    <option value="8">8 DDD Proc's</option>
+                    <option value="9">9 DDD Proc's</option>
+                    <option value="10">10 DDD Proc's</option>
+                    <option value="11">11 DDD Proc's</option>
+                    <option value="12">12 DDD Proc's</option>
+                    <option value="13">13 DDD Proc's</option>
+                    <option value="14">14 DDD Proc's</option>
+                    <option value="15">15 DDD Proc's</option>
                   </select>
                   <select id="dddRankSelect" data-visible-rows="6">
                     <option value="1">S1</option>
@@ -882,8 +886,8 @@
                   </select>
                 </div>
                 <button class="ddd-adv" id="dddSettingsBtn" type="button" onclick="openDddModal()">
-                  <span>Advanced DDD Settings</span>
-                  <span class="ddd-gear">&#9881;</span>
+                  <span class="ddd-adv-line">Advanced DDD</span>
+                  <span class="ddd-adv-line">Settings <span class="ddd-gear">&#9881;</span></span>
                 </button>
               </div>
             </div>
