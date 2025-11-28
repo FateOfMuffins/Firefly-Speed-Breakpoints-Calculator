@@ -8,16 +8,34 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #050816;
-      --panel: rgba(10, 14, 26, 0.82);
-      --panel-strong: rgba(12, 18, 32, 0.9);
-      --border: rgba(255, 255, 255, 0.14);
-      --accent: #f7b733;
-      --accent-soft: rgba(247, 183, 51, 0.14);
-      --accent-strong: rgba(247, 183, 51, 0.4);
-      --teal: #5eead4;
-      --text: #f8fafc;
-      --muted: #cbd5e1;
+      --bg: #f6f3ea;
+      --panel: rgba(18, 26, 38, 0.70);
+      --panel-strong: rgba(14, 20, 30, 0.80);
+      --border: rgba(96, 132, 158, 0.32);
+      --accent: #72d8c5;          /* mint-light from effects */
+      --accent-soft: rgba(114, 216, 197, 0.18);
+      --accent-strong: rgba(114, 216, 197, 0.45);
+      --teal: #4ab0c7;
+      --text: #ffffff;
+      --muted: #c6d4e1;
+      --gold: #e8c36c;
+      --lav: #7a8ac4;
+      --ember: #ff8a3d;
+      --control: rgba(90, 201, 255, 0.54);        /* eye teal */
+      --control-strong: rgba(244, 176, 209, 0.54);/* eye pink */
+      --control-border: rgba(255, 255, 255, 0.28);
+      --bright-green: #c7e36a;
+      --text-stroke: 0 transparent;
+      --text-shadow-outline:
+        -1px 0 0 rgba(0,0,0,0.9),
+        1px 0 0 rgba(0,0,0,0.9),
+        0 -1px 0 rgba(0,0,0,0.9),
+        0 1px 0 rgba(0,0,0,0.9),
+        -1px -1px 0 rgba(0,0,0,0.9),
+        1px -1px 0 rgba(0,0,0,0.9),
+        -1px 1px 0 rgba(0,0,0,0.9),
+        1px 1px 0 rgba(0,0,0,0.9);
+      --text-stroke: 1px rgba(0,0,0,0.9);
     }
     * { box-sizing: border-box; }
     body {
@@ -25,12 +43,21 @@
       margin: 0;
       padding: 20px 28px 40px;
       min-height: 100vh;
-      background:
-        linear-gradient(140deg, rgba(40,46,80,0.6), rgba(52,40,88,0.55) 25%, rgba(36,46,78,0.6) 60%, rgba(28,28,52,0.68)),
-        url('Firefly Valentines.jpg') center/cover fixed;
+      background: url('Firefly Valentines.jpg') center/cover fixed;
       color: var(--text);
-      backdrop-filter: blur(1px);
-      box-shadow: inset 0 0 220px rgba(0,0,0,0.28);
+      backdrop-filter: none;
+      box-shadow: none;
+      text-shadow: none;
+    }
+    /* Apply readable outline to most text elements */
+    h1, h2, h3, h4, h5, h6,
+    p, span, label, button,
+    input, select, option, textarea,
+    .buff-title, .buff-sub, .subtitle,
+    .card-title, .card-sub, .summary,
+    table, th, td,
+    .modal, .modal * {
+      text-shadow: var(--text-shadow-outline);
     }
     .shell {
       max-width: 1340px;
@@ -44,18 +71,18 @@
       height: 200px;
       border-radius: 22px;
       overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.14);
-      box-shadow: 0 28px 60px rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.45);
+      box-shadow: 0 12px 24px rgba(20,28,40,0.16);
       background:
-        linear-gradient(115deg, rgba(18,22,38,0.78), rgba(12,16,32,0.5)),
-        radial-gradient(circle at 20% 30%, rgba(247,183,51,0.28), transparent 30%),
-        radial-gradient(circle at 85% 40%, rgba(94,234,212,0.22), transparent 32%);
+        linear-gradient(115deg, rgba(255,255,255,0.75), rgba(246,243,234,0.7)),
+        radial-gradient(circle at 22% 28%, rgba(114,216,197,0.1), transparent 44%),
+        radial-gradient(circle at 80% 42%, rgba(122,138,196,0.08), transparent 46%);
     }
     .hero::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(160deg, rgba(0,0,0,0.48), rgba(0,0,0,0.16));
+      background: linear-gradient(160deg, rgba(0,0,0,0.18), rgba(0,0,0,0.06));
       z-index: 1;
       pointer-events: none;
     }
@@ -64,8 +91,8 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 80% 50%, rgba(0,0,0,0), rgba(5,7,15,0.88)),
-        linear-gradient(160deg, rgba(5,6,10,0.75), rgba(7,8,16,0.2));
+        radial-gradient(circle at 80% 50%, rgba(0,0,0,0), rgba(5,7,15,0.35)),
+        linear-gradient(160deg, rgba(5,6,10,0.25), rgba(7,8,16,0.08));
     }
     .hero-content {
       position: relative;
@@ -86,7 +113,7 @@
       gap: 0.75rem;
       flex-wrap: nowrap;
       white-space: nowrap;
-      text-shadow: 0 8px 22px rgba(0,0,0,0.65);
+      text-shadow: var(--text-shadow-outline);
     }
     .hero-title span.emblem {
       font-size: 0.9rem;
@@ -94,41 +121,43 @@
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,0.4);
       background: rgba(0,0,0,0.32);
-      color: var(--accent);
+      color: var(--gold);
       text-transform: uppercase;
       letter-spacing: 0.14em;
+      text-shadow: var(--text-shadow-outline);
     }
     .hero-sub {
       font-size: 1rem;
-      color: var(--muted);
+      color: #ffffff;
       max-width: 100%;
       white-space: normal;
-      text-shadow: 0 6px 16px rgba(0,0,0,0.55);
+      text-shadow: var(--text-shadow-outline);
     }
 
     .panel {
       background: var(--panel);
       border-radius: 18px;
       padding: 18px 20px 20px;
-      box-shadow: 0 22px 48px rgba(0,0,0,0.7);
+      box-shadow: 0 12px 28px rgba(20, 28, 40, 0.18);
       border: 1px solid var(--border);
       margin-bottom: 20px;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(4px);
       position: relative;
       overflow: hidden;
     }
+    .av-panel { overflow: visible; }
     .panel::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 18% 10%, rgba(247,183,51,0.08), transparent 40%);
+      background: radial-gradient(circle at 18% 10%, rgba(114,216,197,0.12), transparent 48%);
       pointer-events: none;
     }
     .panel::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 88% 0%, rgba(94,234,212,0.08), transparent 38%);
+      background: radial-gradient(circle at 88% 0%, rgba(122,138,196,0.12), transparent 46%);
       pointer-events: none;
     }
     .panel-header {
@@ -158,48 +187,80 @@
     }
     .subtitle {
       font-size: 0.92rem;
-      color: var(--muted);
+      color: #ffffff;
       margin-bottom: 0.2rem;
       max-width: 840px;
     }
 
     .controls {
       display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      align-items: flex-end;
+      flex-direction: column;
+      gap: 8px;
+      align-items: stretch;
       background: linear-gradient(120deg, rgba(255,255,255,0.04), rgba(255,255,255,0));
-      padding: 12px;
+      padding: 10px;
       border-radius: 14px;
       border: 1px solid rgba(255,255,255,0.06);
+    }
+    .controls-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: flex-start;
+      justify-content: flex-start;
     }
     .control-group {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      min-width: 240px;
+      gap: 6px;
+      min-width: 0;
+      height: 100%;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex: 0 0 auto;
     }
+    .control-group.spd-group { flex: 0 0 260px; }
+    .control-group.buff-group { flex: 0 0 180px; gap: 20px; }
+    .control-group.e5-group { flex: 0 0 180px; gap: 10px; }
+    .control-group.ddd-group { flex: 0 0 340px; }
     .toggle-row {
       display: flex;
-      gap: 14px;
+      gap: 12px;
       flex-wrap: nowrap;
       justify-content: flex-start;
       align-items: center;
+    }
+    .toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+      font-size: 0.8rem;
+      color: #ffffff;
     }
     .toggle-group {
       display: flex;
       flex-direction: column;
       gap: 6px;
-      min-width: 320px;
-      flex: 1;
+      min-width: 0;
     }
-    .toggle-group-right {
-      max-width: 320px;
+    .buff-block {
+      display: flex;
       align-items: flex-start;
+      gap: 6px;
     }
+    .buff-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      line-height: 1.1;
+    }
+    .buff-title { font-weight: 600; color: var(--text); font-size: 1rem; }
+    label.buff-title { color: var(--text); font-weight: 600; font-size: 1rem; }
+    .buff-sub { color: #ffffff; font-size: 0.8rem; }
     label {
       font-size: 0.8rem;
-      color: var(--muted);
+      color: #ffffff;
       letter-spacing: 0.02em;
     }
     input[type="number"],
@@ -209,36 +270,49 @@
     input[type="number"] {
       padding: 10px 12px;
       border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: var(--panel-strong);
+      border: 1px solid var(--control-border);
+      background: linear-gradient(135deg, var(--control), var(--control-strong));
       color: var(--text);
       font-size: 0.9rem;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+      text-indent: 1px;
     }
     input[type="number"]:focus-visible {
       outline: 1px solid var(--accent);
       box-shadow: 0 0 0 2px var(--accent-soft);
     }
+    input[type="number"]:hover,
+    select:hover,
+    .ddd-adv:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-soft);
+    }
+    input[type="number"]:focus-visible,
+    select:focus-visible {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-soft);
+    }
     input[type="range"] { accent-color: var(--accent); }
 
+    /* Modal override input text color */
+    #dddOverrideInput { color: #000000; }
+
     select {
-      padding: 9px 10px;
+      padding: 4px 10px;
       border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: var(--panel-strong);
+      border: 1px solid var(--control-border);
+      background: linear-gradient(135deg, var(--control), var(--control-strong));
       color: var(--text);
       font-size: 0.85rem;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+      height: 20px;
+      text-indent: 1px;
+    }
+    select option {
+      color: #000000;
+      background: #ffffff;
     }
 
-    .toggle {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 4px;
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
     .toggle-inline {
       flex: 1 1 100%;
       display: flex;
@@ -246,16 +320,80 @@
       gap: 10px;
       align-items: center;
     }
-    H 1 100%;
-      flex-wrap: wrap;
+    .mini-panel {
+      padding: 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(120deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr 180px;
+      grid-template-rows: auto 1fr;
       gap: 10px;
-      align-items: center;
+      align-items: start;
+      position: relative;
     }
+    .mini-panel-header {
+      font-weight: 500;
+      font-size: 0.85rem;
+      color: #ffffff;
+      margin-bottom: 2px;
+      grid-column: 1;
+      grid-row: 1;
+    }
+    .ddd-row { display: contents; }
+    .ddd-column {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      grid-column: 1;
+      grid-row: 2;
+      min-width: 0;
+    }
+    .ddd-column select {
+      height: 24px;
+      line-height: 24px;
+      width: 100%;
+    }
+    .e5-group select { width: 100%; }
+    .phainon-select { width: 100%; height: 24px; }
+    .ddd-adv {
+      border: 1px solid var(--control-border);
+      border-radius: 10px;
+      min-height: 64px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      font-size: 0.85rem;
+      color: var(--text);
+      text-align: center;
+      padding: 6px;
+      gap: 6px;
+      background: linear-gradient(135deg, var(--control), var(--control-strong));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+      cursor: pointer;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+      align-self: stretch;
+      justify-content: center;
+      width: 180px;
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      height: 100%;
+    }
+    .ddd-adv:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-soft);
+      color: var(--text);
+    }
+    .ddd-gear { font-size: 1.2rem; }
     .muted-inline {
       font-size: 0.75rem;
-      color: var(--muted);
+      color: #ffffff;
       white-space: nowrap;
     }
+    .phainon-select { padding: 6px 10px; height: 32px; width: 120px; }
     .toggle input { accent-color: var(--accent); }
 
     .summary {
@@ -264,7 +402,7 @@
       gap: 12px;
       margin-top: 14px;
       font-size: 0.9rem;
-      color: var(--muted);
+      color: #ffffff;
     }
     .summary-item {
       background: linear-gradient(135deg, rgba(247,183,51,0.12), rgba(10,12,24,0.92));
@@ -276,7 +414,7 @@
       gap: 6px;
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
     }
-    .summary-label { color: var(--muted); }
+    .summary-label { color: #ffffff; }
     .summary-value { color: #f7c266; font-weight: 600; }
 
     .charts {
@@ -296,7 +434,7 @@
     }
     .card-sub {
       font-size: 0.82rem;
-      color: var(--muted);
+      color: #ffffff;
       margin-bottom: 8px;
     }
     .pill {
@@ -304,7 +442,7 @@
       padding: 2px 8px;
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,0.2);
-      color: var(--muted);
+      color: #ffffff;
       background: rgba(255,255,255,0.06);
     }
 
@@ -320,6 +458,7 @@
       border-bottom: 1px solid rgba(255,255,255,0.06);
       text-align: left;
       white-space: nowrap;
+      color: var(--text);
     }
     th {
       font-weight: 600;
@@ -334,10 +473,16 @@
     tbody tr:hover { background: rgba(247,183,51,0.12); transition: background 0.2s ease; }
 
     tr.event-phase td { color: var(--teal); font-weight: 600; }
+    tr.event-phase td:first-child { color: var(--text); }
+    tr.event-phase td:last-child { color: var(--text); }
     tr.event-eba td:nth-child(2) { color: #facc15; }
     tr.event-cc td:nth-child(2) { color: #f97316; font-weight: 600; }
     tr.event-skill td:nth-child(2) { color: #a5b4fc; }
     tr.event-ult td:nth-child(2) { color: var(--accent); font-weight: 600; }
+    /* Color AV column when AA directly advanced an event (future mode) */
+    tr.event-eba[data-aa-hit] td:last-child { color: #facc15; }
+    tr.event-skill[data-aa-hit] td:last-child { color: #a5b4fc; }
+    tr.event-ult[data-aa-hit] td:last-child { color: var(--accent); font-weight: 600; }
 
     /* AV band highlights for Scenario A */
     tr.range-a0 td { background-color: rgba(56,189,248,0.16); }
@@ -364,8 +509,10 @@
       margin-top: 8px;
       align-items: center;
       font-size: 0.78rem;
-      color: var(--muted);
+      color: #ffffff;
     }
+    .inv-target { width: 220px; }
+    .inv-target-input { max-width: 180px; }
     .preset-label { margin-right: 4px; }
     .preset-btn {
       border-radius: 999px;
@@ -434,6 +581,205 @@
     .hero.hidden {
       display: none;
     }
+
+    /* Modal for advanced DDD settings */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      z-index: 999;
+      padding: 32px 24px;
+    }
+    .modal.active { display: flex; }
+    .modal-dialog {
+      width: min(1200px, 96vw);
+      max-height: 90vh;
+      overflow: auto;
+      background:
+        linear-gradient(90deg, rgba(185,180,173,0.82) 0%, rgba(213,213,213,0.86) 55%, rgba(235,235,235,0.9) 100%),
+        radial-gradient(circle at 22% 28%, rgba(114,216,197,0.07), transparent 44%),
+        radial-gradient(circle at 80% 42%, rgba(122,138,196,0.05), transparent 46%);
+      border-radius: 18px;
+      border: 2px solid rgba(114,216,197,0.6);
+      box-shadow: 0 12px 24px rgba(20,28,40,0.16), 0 0 0 2px rgba(114,216,197,0.3);
+      padding: 20px 22px 24px;
+      position: relative;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .modal-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .modal-close {
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 8px 10px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.15s ease;
+    }
+    .modal-close:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-soft);
+    }
+    .modal-sub {
+      color: #ffffff;
+      line-height: 1.4;
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+    }
+    .modal-sections {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .modal-section {
+      border: 2px solid rgba(114,216,197,0.6);
+      border-radius: 12px;
+      padding: 12px;
+      background:
+        linear-gradient(90deg, rgba(185,180,173,0.76) 0%, rgba(213,213,213,0.84) 55%, rgba(235,235,235,0.88) 100%),
+        radial-gradient(circle at 22% 28%, rgba(114,216,197,0.06), transparent 44%),
+        radial-gradient(circle at 80% 42%, rgba(122,138,196,0.04), transparent 46%);
+      box-shadow: 0 8px 18px rgba(20,28,40,0.18), inset 0 0 0 2px rgba(114,216,197,0.2);
+    }
+    .modal-section.disabled {
+      opacity: 0.6;
+    }
+    .modal-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .modal-radio {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+    .modal-section-sub {
+      color: #ffffff;
+      font-size: 0.85rem;
+    }
+    .modal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      align-items: start;
+    }
+    .modal-dual {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+    }
+    .modal-card {
+      border: 2px dashed rgba(114,216,197,0.6);
+      border-radius: 12px;
+      padding: 14px;
+      min-height: 120px;
+      color: #ffffff;
+      background:
+        linear-gradient(90deg, rgba(185,180,173,0.72) 0%, rgba(213,213,213,0.82) 55%, rgba(235,235,235,0.86) 100%),
+        radial-gradient(circle at 22% 28%, rgba(114,216,197,0.05), transparent 44%),
+        radial-gradient(circle at 80% 42%, rgba(122,138,196,0.03), transparent 46%);
+    }
+    .aa-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+    }
+    .aa-table th,
+    .aa-table td {
+      border: 1px solid rgba(0,0,0,0.12);
+      padding: 6px 8px;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+    .aa-table input[type="number"] {
+      width: 100%;
+      padding: 6px 8px;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.15);
+      background: rgba(255,255,255,0.8);
+      color: #000000;
+      font-weight: 600;
+    }
+    .add-aa-row {
+      margin-top: 8px;
+      border-radius: 10px;
+      border: 1px solid rgba(0,0,0,0.16);
+      background: rgba(255,255,255,0.75);
+      color: #000000;
+      padding: 8px 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .add-aa-row:hover {
+      border-color: rgba(114,216,197,0.7);
+      box-shadow: 0 0 0 2px rgba(114,216,197,0.2);
+    }
+    /* Modal text */
+    .modal, .modal * {
+      color: #000000;
+      text-shadow: none;
+      font-weight: 700;
+    }
+    .modal-section[data-mode="procs"] select {
+      height: 25px;
+      line-height: 25px;
+    }
+    .modal-card h4 {
+      margin: 0 0 6px;
+      color: #000000;
+      letter-spacing: 0.01em;
+    }
+
+    /* Compact inline control rows in modal */
+    .modal-control-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-top: -6px;
+    }
+    /* Inline the radio and controls for quick-preset and override rows */
+    .modal-section[data-mode="procs"],
+    .modal-section[data-mode="override"] {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .modal-section[data-mode="procs"] .modal-section-header,
+    .modal-section[data-mode="override"] .modal-section-header {
+      margin: 0;
+      justify-content: flex-start;
+      gap: 8px;
+    }
+    .modal-section[data-mode="procs"] .modal-control-row,
+    .modal-section[data-mode="override"] .modal-control-row {
+      margin-top: 0;
+      flex: 1 1 auto;
+    }
   </style>
 </head>
 <body>
@@ -465,28 +811,36 @@
       </div>
 
       <div class="controls">
-        <div class="control-group">
-          <label for="spdNumber">Firefly out of combat SPD</label>
-          <input id="spdNumber" type="number" step="0.1" min="80" max="250" value="178.4" />
-          <input id="spdSlider" type="range" step="0.1" min="80" max="250" value="178.4" />
-        </div>
-        <div class="control-group">
-          <div class="toggle-row">
-            <div class="toggle">
+        <div class="controls-grid">
+          <div class="control-group spd-group">
+            <label for="spdNumber" class="buff-title">Firefly out of combat SPD</label>
+            <input id="spdNumber" type="number" step="0.1" min="80" max="250" value="178.4" />
+            <input id="spdSlider" type="range" step="0.1" min="80" max="250" value="178.4" />
+          </div>
+          <div class="control-group buff-group">
+            <div class="buff-block">
               <input id="rmToggle" type="checkbox" />
-              <span id="rmText">Ruan Mei: +10% of 104.0 = 10.4</span>
+              <div class="buff-text" id="rmTextBlock">
+                <span class="buff-title">Ruan Mei</span>
+                <span class="buff-sub" id="rmText">+10% of 104 = 10.4</span>
+              </div>
             </div>
-            <div class="toggle">
+            <div class="buff-block">
               <input id="dahliaToggle" type="checkbox" checked />
-              <span id="dahliaText">Dahlia A4: +30% of 104.0 = 31.2</span>
+              <div class="buff-text" id="dahliaTextBlock">
+                <span class="buff-title">Dahlia A4</span>
+                <span class="buff-sub" id="dahliaText">+30% of 104 = 31.2</span>
+              </div>
             </div>
+          </div>
+          <div class="control-group e5-group">
             <div class="toggle">
               <input id="e5Toggle" type="checkbox" />
-              <span>E5 (+6 SPD in CC)</span>
+              <span class="buff-title">E5 <span class="buff-sub">(+6 SPD in CC)</span></span>
             </div>
-            <div class="toggle">
-              <span>Phainon LC</span>
-              <select id="phainonSelect">
+            <div class="toggle-group">
+              <span class="buff-title">Phainon LC</span>
+              <select id="phainonSelect" class="phainon-select">
                 <option value="0">Off</option>
                 <option value="1">S1 (+12 base SPD)</option>
                 <option value="2">S2 (+14 base SPD)</option>
@@ -496,23 +850,43 @@
               </select>
             </div>
           </div>
-          <div class="toggle toggle-inline">
-            <span># of DDD procs per ult</span>
-            <select id="dddSelect">
-              <option value="0">0 DDD</option>
-              <option value="1">1 DDD</option>
-              <option value="2">2 DDD</option>
-              <option value="3">3 DDD</option>
-              <option value="4">4 DDD</option>
-            </select>
-            <select id="dddRankSelect">
-              <option value="1">S1</option>
-              <option value="2">S2</option>
-              <option value="3">S3</option>
-              <option value="4">S4</option>
-              <option value="5" selected>S5</option>
-            </select>
-            <span class="muted-inline">(procs are shown only on EBA 2 in the charts for simplicity)</span>
+          <div class="control-group ddd-group">
+            <div class="mini-panel">
+              <div class="mini-panel-header buff-title">DDD Procs Per Ult</div>
+              <div class="ddd-row">
+                <div class="ddd-column">
+                  <select id="dddSelect" data-visible-rows="6">
+                    <option value="0">0 DDD Procs</option>
+                    <option value="1">1 DDD Proc</option>
+                    <option value="2">2 DDD Procs</option>
+                    <option value="3">3 DDD Procs</option>
+                    <option value="4">4 DDD Procs</option>
+                    <option value="5">5 DDD Procs</option>
+                    <option value="6">6 DDD Procs</option>
+                    <option value="7">7 DDD Procs</option>
+                    <option value="8">8 DDD Procs</option>
+                    <option value="9">9 DDD Procs</option>
+                    <option value="10">10 DDD Procs</option>
+                    <option value="11">11 DDD Procs</option>
+                    <option value="12">12 DDD Procs</option>
+                    <option value="13">13 DDD Procs</option>
+                    <option value="14">14 DDD Procs</option>
+                    <option value="15">15 DDD Procs</option>
+                  </select>
+                  <select id="dddRankSelect" data-visible-rows="6">
+                    <option value="1">S1</option>
+                    <option value="2">S2</option>
+                    <option value="3">S3</option>
+                    <option value="4">S4</option>
+                    <option value="5" selected>S5</option>
+                  </select>
+                </div>
+                <button class="ddd-adv" id="dddSettingsBtn" type="button" onclick="openDddModal()">
+                  <span>Advanced DDD Settings</span>
+                  <span class="ddd-gear">&#9881;</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -521,7 +895,6 @@
         <div class="summary-item" id="summaryAv"></div>
       </div>
     </div>
-
     <div class="charts">
       <div class="panel chart-card">
         <div class="card-title">
@@ -569,26 +942,26 @@
         <span>Speed Breakpoints</span>
         <span class="pill">AV vs sheet SPD</span>
       </div>
-      <div class="card-sub">
-        Choose target AVs and a sheet SPD range. Each table shows which SPD bands give different EBA / Skill patterns before that AV.
-      </div>
-      <div class="controls" style="margin-bottom: 10px;">
-        <div class="control-group">
-          <label for="targetAvInputA">Scenario A target AV (MoC)</label>
-          <input id="targetAvInputA" type="number" step="1" min="50" max="600" value="150" />
+        <div class="card-sub">
+          Choose target AVs and a sheet SPD range. Each table shows which SPD bands give different EBA / Skill patterns before that AV.
         </div>
-        <div class="control-group">
-          <label for="targetAvInputB">Scenario B target AV (AA)</label>
-          <input id="targetAvInputB" type="number" step="1" min="50" max="600" value="300" />
-        </div>
-        <div class="control-group">
-          <label>Sheet SPD scan range</label>
-          <div style="display:flex; gap:8px;">
-            <input id="invMinSpd" type="number" step="0.1" min="80" max="260" value="104" />
-            <input id="invMaxSpd" type="number" step="0.1" min="80" max="260" value="220" />
+        <div class="controls" style="margin-bottom: 10px; display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; flex-direction: row;">
+          <div class="control-group inv-target" style="flex: 0 0 200px;">
+            <label for="targetAvInputA">Scenario A target AV (MoC)</label>
+            <input id="targetAvInputA" class="inv-target-input" type="number" step="1" min="50" max="600" value="150" />
+          </div>
+          <div class="control-group inv-target" style="flex: 0 0 200px;">
+            <label for="targetAvInputB">Scenario B target AV (AA)</label>
+            <input id="targetAvInputB" class="inv-target-input" type="number" step="1" min="50" max="600" value="300" />
+          </div>
+          <div class="control-group inv-target" style="flex: 0 0 220px;">
+            <label>Sheet SPD scan range</label>
+            <div style="display:flex; gap:8px;">
+              <input id="invMinSpd" class="inv-target-input" type="number" step="0.1" min="80" max="260" value="104" />
+              <input id="invMaxSpd" class="inv-target-input" type="number" step="0.1" min="80" max="260" value="220" />
+            </div>
           </div>
         </div>
-      </div>
       <div class="preset-row">
         <span class="preset-label">MoC presets (Scenario A):</span>
         <button class="preset-btn preset-a" data-av="150">MoC 0 Cycle (150)</button>
@@ -639,6 +1012,118 @@
     </div>
   </div>
 
+  <div class="modal" id="dddModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">Advanced DDD Settings</div>
+          <div class="modal-sub">
+            The % Action Advance is used to calculate how many EBA's will occur during CC. Then, the total % AA is averaged evenly across all EBA's that can be AA'd. For example, 5 S5 DDD proc's gives 120% AA. If it results in 4 EBA's that can be advanced, each of them will be treated as if they had 120% / 4 = 30% AA. This assumes all DDD proc's are not wasted and are used during CC only.
+            You can either use the DDD presets, or input in exact AA for your use case. For example Dahlia E6 is 20%.
+          </div>
+        </div>
+        <button class="modal-close" id="dddModalClose" type="button">Close</button>
+      </div>
+
+      <div class="modal-sections">
+        <div class="modal-section" data-mode="procs">
+          <div class="modal-section-header">
+            <label class="modal-radio">
+              <input type="radio" name="dddMode" value="procs" checked />
+              
+            </label>
+            <span class="modal-section-sub"></span>
+          </div>
+          <div class="modal-control-row">
+            <div style="display:flex; align-items:center; gap:6px; width:auto;">
+              <label for="dddSelectModal" style="margin:0;">DDD Proc's Per Ult</label>
+              <select id="dddSelectModal" style="width: 140px;">
+                <option value="0">0 DDD Proc's</option>
+                <option value="1">1 DDD Proc's</option>
+                <option value="2">2 DDD Proc's</option>
+                <option value="3">3 DDD Proc's</option>
+                <option value="4">4 DDD Proc's</option>
+                <option value="5">5 DDD Proc's</option>
+                <option value="6">6 DDD Proc's</option>
+                <option value="7">7 DDD Proc's</option>
+                <option value="8">8 DDD Proc's</option>
+                <option value="9">9 DDD Proc's</option>
+                <option value="10">10 DDD Proc's</option>
+                <option value="11">11 DDD Proc's</option>
+                <option value="12">12 DDD Proc's</option>
+                <option value="13">13 DDD Proc's</option>
+                <option value="14">14 DDD Proc's</option>
+                <option value="15">15 DDD Proc's</option>
+              </select>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px; width:auto;">
+              <label for="dddRankSelectModal" style="margin:0;">DDD Superimposition</label>
+              <select id="dddRankSelectModal" style="width: 110px;">
+                <option value="1">S1</option>
+                <option value="2">S2</option>
+                <option value="3">S3</option>
+                <option value="4">S4</option>
+                <option value="5" selected>S5</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-section" data-mode="override">
+          <div class="modal-section-header">
+            <label class="modal-radio">
+              <input type="radio" name="dddMode" value="override" />
+              
+            </label>
+            <span class="modal-section-sub"></span>
+          </div>
+          <div class="modal-control-row">
+            <label for="dddOverrideInput" style="margin:0;">Exact AA% Per Ult</label>
+            <input id="dddOverrideInput" type="number" min="0" step="1" value="0" style="width: 100px;" />
+          </div>
+        </div>
+
+        <div class="modal-section" data-mode="future">
+          <div class="modal-section-header">
+            <label class="modal-radio">
+              <input type="radio" name="dddMode" value="future" />
+              Detailed AA at specific AV
+            </label>
+            <span class="modal-section-sub">You can specify the exact AV at which a certain AA procs. Like if you know at 75 AV, HMC will use DDD, then you can input that here.</span>
+          </div>
+          <div class="modal-dual">
+            <div class="modal-card">
+              <h4>Scenario A</h4>
+              <table class="aa-table">
+                <thead>
+                  <tr>
+                    <th>AV of the AA Proc</th>
+                    <th>% AA</th>
+                  </tr>
+                </thead>
+                <tbody id="aaTableBodyA"></tbody>
+              </table>
+              <button class="add-aa-row" type="button" data-scenario="A">Add AA row</button>
+            </div>
+            <div class="modal-card">
+              <h4>Scenario B</h4>
+              <table class="aa-table">
+                <thead>
+                  <tr>
+                    <th>AV of the AA Proc</th>
+                    <th>% AA</th>
+                  </tr>
+                </thead>
+                <tbody id="aaTableBodyB"></tbody>
+              </table>
+              <button class="add-aa-row" type="button" data-scenario="B">Add AA row</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     const BASE_SPD = 104;           // Firefly's base SPD without Phainon
     const CC_TIMER_AV = 10000 / 70; // ~142.857
@@ -658,6 +1143,13 @@
     const summaryAv = document.getElementById('summaryAv');
     const rmText = document.getElementById('rmText');
     const dahliaText = document.getElementById('dahliaText');
+    const dddSettingsBtn = document.getElementById('dddSettingsBtn');
+    const dddModal = document.getElementById('dddModal');
+    const dddModalClose = document.getElementById('dddModalClose');
+    const dddSelectModal = document.getElementById('dddSelectModal');
+    const dddRankSelectModal = document.getElementById('dddRankSelectModal');
+    const dddOverrideInput = document.getElementById('dddOverrideInput');
+    const dddModeRadios = document.querySelectorAll('input[name="dddMode"]');
 
     const targetAvInputA = document.getElementById('targetAvInputA');
     const targetAvInputB = document.getElementById('targetAvInputB');
@@ -670,20 +1162,25 @@
     const pinToggleBtn = document.getElementById('pinToggleBtn');
     const avPanel = document.querySelector('.av-panel');
     const hero = document.querySelector('.hero');
+    const aaTableBodyA = document.getElementById('aaTableBodyA');
+    const aaTableBodyB = document.getElementById('aaTableBodyB');
+    const aaAddButtons = document.querySelectorAll('.add-aa-row');
     let panelPinned = false;
 
     function fmt(x) {
       return x.toFixed(2);
     }
 
-    function buildRow(n, event, av, cls) {
-      return { n, event, av, cls: cls || '' };
+    function buildRow(n, event, av, cls, aaHit) {
+      const row = { n, event, av, cls: cls || '' };
+      if (aaHit) row.aaHit = true;
+      return row;
     }
 
     function getDDDLevel() {
       const v = parseInt(dddSelect.value, 10);
       if (isNaN(v)) return 0;
-      return Math.min(4, Math.max(0, v));
+      return Math.min(15, Math.max(0, v));
     }
 
     function getDDDReduction() {
@@ -695,6 +1192,45 @@
         case 4: return 0.22;
         case 5: default: return 0.24;
       }
+    }
+
+    function getDddMode() {
+      const checked = document.querySelector('input[name="dddMode"]:checked');
+      return checked ? checked.value : 'procs';
+    }
+
+    function setDddMode(mode) {
+      if (!dddModeRadios || !dddModeRadios.length) return;
+      let changed = false;
+      dddModeRadios.forEach(r => {
+        if (r.value === mode && !r.checked) {
+          r.checked = true;
+          changed = true;
+        }
+      });
+      if (changed) {
+        refreshDddSectionStates();
+      }
+    }
+
+    function getOverrideAA() {
+      const val = parseFloat((dddOverrideInput && dddOverrideInput.value) || '0');
+      if (isNaN(val) || val < 0) return 0;
+      return val / 100;
+    }
+
+    function getTotalAA() {
+      const mode = getDddMode();
+      if (mode === 'override') {
+        return getOverrideAA();
+      }
+      if (mode === 'future') {
+        return 0;
+      }
+      // Standard procs mode
+      const ddd = getDDDLevel();
+      const dddReduction = getDDDReduction();
+      return ddd * dddReduction;
     }
 
     function getPhainonBonus() {
@@ -730,6 +1266,208 @@
         baseAVOut: 10000 / spdOut,
         baseAVCC: 10000 / spdCC,
       };
+    }
+
+    // Compute the AV timings of EBAs inside a CC window, distributing a total AA budget.
+    // totalAAFrac: total action-advance as a multiple of one action (e.g., 1.2 = 120%).
+    // includeFirstInShare: when true, all EBAs share the AA; when false, EBA1 is at time 0 and does not share.
+    function getEbaTimes(baseAVCC, totalAAFrac, includeFirstInShare) {
+      const T = CC_TIMER_AV;
+      const eps = 1e-6;
+      const F = Math.max(0, totalAAFrac);
+      const baseCount = T / baseAVCC;
+
+      if (includeFirstInShare) {
+        const N = Math.max(0, Math.floor(baseCount + F + eps));
+        if (N === 0) return [];
+        const perShare = F / N;
+        const delta = baseAVCC * (1 - perShare);
+        const times = [];
+        for (let k = 1; k <= N; k++) {
+          times.push(delta * k);
+        }
+        return times.filter(t => t <= T + eps);
+      } else {
+        const Nshare = Math.max(0, Math.floor(baseCount + F + eps));
+        const times = [0]; // EBA1 at CC start
+        if (Nshare === 0) return times;
+        const perShare = F / Nshare;
+        const delta = baseAVCC * (1 - perShare);
+        for (let k = 1; k <= Nshare; k++) {
+          times.push(delta * k);
+        }
+        return times.filter(t => t <= T + eps);
+      }
+    }
+
+    function addAaRow(body) {
+      if (!body) return;
+      const tr = document.createElement('tr');
+      const tdAv = document.createElement('td');
+      const tdPct = document.createElement('td');
+      const avInput = document.createElement('input');
+      avInput.type = 'number';
+      avInput.min = '0';
+      avInput.step = '0.1';
+      avInput.className = 'aa-av';
+      const pctInput = document.createElement('input');
+      pctInput.type = 'number';
+      pctInput.min = '0';
+      pctInput.step = '0.1';
+      pctInput.className = 'aa-pct';
+      const recalc = () => {
+        setDddMode('future');
+        calculate();
+      };
+      avInput.addEventListener('input', recalc);
+      pctInput.addEventListener('input', recalc);
+      tdAv.appendChild(avInput);
+      tdPct.appendChild(pctInput);
+      tr.appendChild(tdAv);
+      tr.appendChild(tdPct);
+      body.appendChild(tr);
+    }
+
+    function parseAaEvents(body) {
+      const events = [];
+      if (!body) return events;
+      body.querySelectorAll('tr').forEach(row => {
+        const av = parseFloat(row.querySelector('.aa-av')?.value || '');
+        const pct = parseFloat(row.querySelector('.aa-pct')?.value || '');
+        if (!isNaN(av) && av >= 0 && !isNaN(pct) && pct > 0) {
+          events.push({ av, frac: pct / 100 });
+        }
+      });
+      events.sort((a, b) => a.av - b.av);
+      return events;
+    }
+
+    function buildFutureScenario(scenario, baseAVOut, baseAVCC, aaEvents, maxAvOverride) {
+      const rows = [];
+      const maxRows = 800;
+      aaEvents = (aaEvents || []).slice().sort((a, b) => a.av - b.av);
+      const maxAv = typeof maxAvOverride === 'number' ? maxAvOverride : MAX_AV;
+
+      let idx = 1;
+      let t = 0;
+      let inCC = scenario === 'A';
+      let ccEnd = inCC ? CC_TIMER_AV : Infinity;
+      let need = inCC ? baseAVCC : baseAVOut;
+      let cycle = inCC ? 1 : 0;
+      let ebaInCycle = 0;
+      let skillIndex = 0;
+      let aaIdx = 0;
+      let aaTouched = false;
+
+      rows.push(buildRow(idx++, `Phase start (${inCC ? 'CC' : 'no CC'})`, t, 'event-phase'));
+
+      while (t <= maxAv + 1 && rows.length < maxRows) {
+        const tAA = aaIdx < aaEvents.length ? aaEvents[aaIdx].av : Infinity;
+        const tCcEnd = inCC ? ccEnd : Infinity;
+        const tAction = t + need;
+        const tNext = Math.min(tAA, tCcEnd, tAction);
+
+        if (!isFinite(tNext)) break;
+
+        if (tAA <= tAction && tAA < tCcEnd) {
+          const elapsed = tAA - t;
+          need = Math.max(0, need - elapsed);
+          t = tAA;
+          const base = inCC ? baseAVCC : baseAVOut;
+          const effect = Math.max(0, aaEvents[aaIdx].frac * base);
+          if (effect > 0) aaTouched = true;
+          need = Math.max(0, need - effect);
+          aaIdx++;
+          continue;
+        }
+
+        if (inCC && tCcEnd <= tAction && tCcEnd <= tAA) {
+          const elapsed = tCcEnd - t;
+          need = Math.max(0, need - elapsed);
+          t = tCcEnd;
+          rows.push(buildRow(idx++, 'CC ends', t, 'event-cc'));
+          need = need * (baseAVOut / baseAVCC);
+          inCC = false;
+          ccEnd = Infinity;
+          continue;
+        }
+
+        // Action fires
+        const elapsed = tAction - t;
+        need = Math.max(0, need - elapsed);
+        t = tAction;
+
+        const hit = aaTouched;
+        aaTouched = false;
+
+        if (inCC) {
+          if (cycle > 1 && ebaInCycle === 0) {
+            // First CC action in a fresh cycle was already logged when the CC started.
+          }
+          if (ebaInCycle === 0) {
+            ebaInCycle = 1;
+            rows.push(buildRow(idx++, 'EBA 1', t, 'event-eba', hit));
+          } else {
+            ebaInCycle++;
+            rows.push(buildRow(idx++, `EBA ${ebaInCycle}`, t, 'event-eba', hit));
+          }
+          need = baseAVCC;
+        } else {
+          skillIndex++;
+          const label = (scenario === 'B' && skillIndex === 1)
+            ? `Skill ${skillIndex} (opening)`
+            : `Skill ${skillIndex} (post-CC)`;
+          rows.push(buildRow(idx++, label, t, 'event-skill', hit));
+
+          // Start CC immediately and log Ult & EBA1 at the same AV.
+          cycle += 1;
+          inCC = true;
+          ebaInCycle = 0;
+          ccEnd = t + CC_TIMER_AV;
+          rows.push(buildRow(idx++, `Ult & EBA 1 (ult ${cycle})`, t, 'event-ult', hit));
+          ebaInCycle = 1;
+          need = baseAVCC;
+        }
+      }
+
+      return rows.filter(r => r.av <= MAX_AV + 1);
+    }
+    function syncDddModalFromMain() {
+      if (dddSelectModal && dddSelect) dddSelectModal.value = dddSelect.value;
+      if (dddRankSelectModal && dddRankSelect) dddRankSelectModal.value = dddRankSelect.value;
+    }
+
+    function syncMainFromDddModal() {
+      if (dddSelect && dddSelectModal) dddSelect.value = dddSelectModal.value;
+      if (dddRankSelect && dddRankSelectModal) dddRankSelect.value = dddRankSelectModal.value;
+    }
+
+    function refreshDddSectionStates() {
+      const mode = getDddMode();
+      document.querySelectorAll('.modal-section').forEach(sec => {
+        const secMode = sec.getAttribute('data-mode');
+        if (secMode && secMode !== mode) {
+          sec.classList.add('disabled');
+        } else {
+          sec.classList.remove('disabled');
+        }
+      });
+    }
+
+    function openDddModal() {
+      syncDddModalFromMain();
+      refreshDddSectionStates();
+      if (dddModal) {
+        dddModal.classList.add('active');
+        dddModal.setAttribute('aria-hidden', 'false');
+      }
+    }
+
+    function closeDddModal() {
+      if (dddModal) {
+        dddModal.classList.remove('active');
+        dddModal.setAttribute('aria-hidden', 'true');
+      }
     }
 
     function getRangeClass(av, scenario) {
@@ -779,32 +1517,33 @@
 
     function patternScenarioA(sheetSpd, targetAv) {
       const { spdOut, spdCC, baseAVOut, baseAVCC } = getSpeedProfile(sheetSpd);
-      const ddd = getDDDLevel();
-      const dddReduction = getDDDReduction();
+      const mode = getDddMode();
+      if (mode === 'future') {
+        const rows = buildFutureScenario('A', baseAVOut, baseAVCC, parseAaEvents(aaTableBodyA), targetAv);
+        const eps = 1e-6;
+        return rows
+          .filter(r => r.av <= targetAv + eps && (r.cls.includes('event-eba') || r.cls.includes('event-ult') || r.cls.includes('event-skill')))
+          .map(r => {
+            if (r.cls.includes('event-skill')) return 'N';
+            return 'E';
+          });
+      }
+      const totalAA = getTotalAA();
       const events = [];
       const eps = 1e-6;
 
       // First CC cycle at AV 0
       let ccStart = 0;
       let ccEnd = ccStart + CC_TIMER_AV;
-      let currentActAv = ccStart;
+      const ebaTimesFirst = getEbaTimes(baseAVCC, totalAA, true);
       let lastCCActionAv = 0;
-      let eIndex = 1;
+      ebaTimesFirst.forEach(t => {
+        const at = ccStart + t;
+        if (at <= targetAv + eps) events.push('E');
+        lastCCActionAv = at;
+      });
 
-      while (true) {
-        let delta = baseAVCC;
-        if (ddd > 0 && eIndex === 2) {
-          delta = baseAVCC * (1 - dddReduction * ddd);
-        }
-        const next = currentActAv + delta;
-        if (next >= ccEnd - eps) break;
-        if (next <= targetAv + eps) events.push('E');
-        lastCCActionAv = next;
-        currentActAv = next;
-        eIndex++;
-      }
-
-      if (!lastCCActionAv) return events;
+      if (!lastCCActionAv) return events; // no EBAs fit
 
       let passed = ccEnd - lastCCActionAv;
       let remainingOld = Math.max(0, baseAVCC - passed);
@@ -827,21 +1566,12 @@
           break;
         }
 
-        let currentActAvLoop = ccStartLoop;
+        const ebaTimesLoop = getEbaTimes(baseAVCC, totalAA, false);
         let lastCCActionAvLoop = ccStartLoop;
-        let eIndexLoop = 2;
-
-        while (true) {
-          let deltaLoop = baseAVCC;
-          if (ddd > 0 && eIndexLoop === 2) {
-            deltaLoop = baseAVCC * (1 - dddReduction * ddd);
-          }
-          const nextLoop = currentActAvLoop + deltaLoop;
-          if (nextLoop >= ccEndLoop - eps) break;
-          if (nextLoop <= targetAv + eps) events.push('E');
-          lastCCActionAvLoop = nextLoop;
-          currentActAvLoop = nextLoop;
-          eIndexLoop++;
+        for (let j = 1; j < ebaTimesLoop.length; j++) {
+          const at = ccStartLoop + ebaTimesLoop[j];
+          if (at <= targetAv + eps) events.push('E');
+          lastCCActionAvLoop = at;
         }
 
         const passedLoop = ccEndLoop - lastCCActionAvLoop;
@@ -863,8 +1593,18 @@
 
     function patternScenarioB(sheetSpd, targetAv) {
       const { spdOut, spdCC, baseAVOut, baseAVCC } = getSpeedProfile(sheetSpd);
-      const ddd = getDDDLevel();
-      const dddReduction = getDDDReduction();
+      const mode = getDddMode();
+      if (mode === 'future') {
+        const rows = buildFutureScenario('B', baseAVOut, baseAVCC, parseAaEvents(aaTableBodyB), targetAv);
+        const eps = 1e-6;
+        return rows
+          .filter(r => r.av <= targetAv + eps && (r.cls.includes('event-eba') || r.cls.includes('event-ult') || r.cls.includes('event-skill')))
+          .map(r => {
+            if (r.cls.includes('event-skill')) return 'N';
+            return 'E';
+          });
+      }
+      const totalAA = getTotalAA();
       const events = [];
       const eps = 1e-6;
 
@@ -877,21 +1617,12 @@
       let ccEnd = ccStart + CC_TIMER_AV;
       if (ccStart <= targetAv + eps) events.push('E'); // Ult & EBA 1
 
-      let currentActAv = ccStart;
+      const ebaTimesFirst = getEbaTimes(baseAVCC, totalAA, false);
       let lastCCActionAv = ccStart;
-      let eIndex = 2;
-
-      while (true) {
-        let delta = baseAVCC;
-        if (ddd > 0 && eIndex === 2) {
-          delta = baseAVCC * (1 - dddReduction * ddd);
-        }
-        const next = currentActAv + delta;
-        if (next >= ccEnd - eps) break;
-        if (next <= targetAv + eps) events.push('E');
-        lastCCActionAv = next;
-        currentActAv = next;
-        eIndex++;
+      for (let j = 1; j < ebaTimesFirst.length; j++) {
+        const at = ccStart + ebaTimesFirst[j];
+        if (at <= targetAv + eps) events.push('E');
+        lastCCActionAv = at;
       }
 
       let passed = ccEnd - lastCCActionAv;
@@ -915,21 +1646,12 @@
           break;
         }
 
-        let currentActAvLoop = ccStartLoop;
+        const ebaTimesLoop = getEbaTimes(baseAVCC, totalAA, false);
         let lastCCActionAvLoop = ccStartLoop;
-        let eIndexLoop = 2;
-
-        while (true) {
-          let deltaLoop = baseAVCC;
-          if (ddd > 0 && eIndexLoop === 2) {
-            deltaLoop = baseAVCC * (1 - dddReduction * ddd);
-          }
-          const nextLoop = currentActAvLoop + deltaLoop;
-          if (nextLoop >= ccEndLoop - eps) break;
-          if (nextLoop <= targetAv + eps) events.push('E');
-          lastCCActionAvLoop = nextLoop;
-          currentActAvLoop = nextLoop;
-          eIndexLoop++;
+        for (let j = 1; j < ebaTimesLoop.length; j++) {
+          const at = ccStartLoop + ebaTimesLoop[j];
+          if (at <= targetAv + eps) events.push('E');
+          lastCCActionAvLoop = at;
         }
 
         const passedLoop = ccEndLoop - lastCCActionAvLoop;
@@ -1059,8 +1781,8 @@
       const baseSpdEff = getEffectiveBaseSpd();
       const rmBonus = 0.1 * baseSpdEff;
       const dahliaBonus = 0.3 * baseSpdEff;
-      if (rmText) rmText.textContent = `Ruan Mei: +10% of ${fmt(baseSpdEff)} = ${fmt(rmBonus)}`;
-      if (dahliaText) dahliaText.textContent = `Dahlia A4: +30% of ${fmt(baseSpdEff)} = ${fmt(dahliaBonus)}`;
+      if (rmText) rmText.textContent = `+10% of ${baseSpdEff.toFixed(0)} = ${rmBonus.toFixed(1)}`;
+      if (dahliaText) dahliaText.textContent = `+30% of ${baseSpdEff.toFixed(0)} = ${dahliaBonus.toFixed(1)}`;
 
       let spdOut = S;
       if (dahliaToggle.checked) spdOut += 0.3 * baseSpdEff;
@@ -1070,8 +1792,8 @@
 
       const baseAVOut = 10000 / spdOut;
       const baseAVCC = 10000 / spdCC;
-      const ddd = getDDDLevel();
-      const dddReduction = getDDDReduction();
+      const mode = getDddMode();
+      const totalAA = getTotalAA();
       const eps = 1e-6;
 
       summarySpd.innerHTML = `
@@ -1089,181 +1811,155 @@
         <span class="summary-value">${fmt(CC_TIMER_AV)}</span>
       `;
 
-      // Scenario A
-      const rowsA = [];
-      let idxA = 1;
-      rowsA.push(buildRow(idxA++, 'Phase start (CC)', 0, 'event-phase'));
+      let rowsA = [];
+      let rowsB = [];
 
-      let ccStart = 0;
-      let ccEnd = ccStart + CC_TIMER_AV;
-      let currentActAv = ccStart;
-      let lastCCActionAv = 0;
-      let eIndex = 1;
+      if (mode === 'future') {
+        const aaEventsA = parseAaEvents(aaTableBodyA);
+        const aaEventsB = parseAaEvents(aaTableBodyB);
+        rowsA = buildFutureScenario('A', baseAVOut, baseAVCC, aaEventsA);
+        rowsB = buildFutureScenario('B', baseAVOut, baseAVCC, aaEventsB);
+      } else {
+        // Scenario A
+        let idxA = 1;
+        rowsA.push(buildRow(idxA++, 'Phase start (CC)', 0, 'event-phase'));
 
-      while (true) {
-        let delta = baseAVCC;
-        if (ddd > 0 && eIndex === 2) {
-          delta = baseAVCC * (1 - dddReduction * ddd);
-        }
-        const next = currentActAv + delta;
-        if (next >= ccEnd - eps) break;
-        rowsA.push(buildRow(idxA++, `EBA ${eIndex}`, next, 'event-eba'));
-        lastCCActionAv = next;
-        currentActAv = next;
-        eIndex++;
-      }
-      rowsA.push(buildRow(idxA++, 'CC ends', ccEnd, 'event-cc'));
-
-      let skillIndexA = 0;
-      let postCCSkillTimeA = null;
-      if (lastCCActionAv > 0) {
-        const passed = ccEnd - lastCCActionAv;
-        const remainingOld = Math.max(0, baseAVCC - passed);
-        const scale = spdCC / spdOut;
-        const newRemaining = remainingOld * scale;
-        postCCSkillTimeA = ccEnd + newRemaining;
-        skillIndexA++;
-        rowsA.push(buildRow(idxA++, `Skill ${skillIndexA} (post-CC)`, postCCSkillTimeA, 'event-skill'));
-      }
-
-      let cycleA = 2;
-      let loopSkillTimeA = postCCSkillTimeA;
-
-      while (loopSkillTimeA != null) {
-        rowsA.push(buildRow(idxA++, `Ult & EBA 1 (ult ${cycleA})`, loopSkillTimeA, 'event-ult'));
-
-        ccStart = loopSkillTimeA;
-        ccEnd = ccStart + CC_TIMER_AV;
-
-        let currentActAvLoop = ccStart;
-        let lastCCActionAvLoop = ccStart;
-        let eIndexLoop = 2;
-
-        while (true) {
-          let deltaLoop = baseAVCC;
-          if (ddd > 0 && eIndexLoop === 2) {
-            deltaLoop = baseAVCC * (1 - dddReduction * ddd);
-          }
-          const nextLoop = currentActAvLoop + deltaLoop;
-          if (nextLoop >= ccEnd - eps) break;
-          rowsA.push(buildRow(idxA++, `EBA ${eIndexLoop}`, nextLoop, 'event-eba'));
-          lastCCActionAvLoop = nextLoop;
-          currentActAvLoop = nextLoop;
-          eIndexLoop++;
-        }
+        let ccStart = 0;
+        let ccEnd = ccStart + CC_TIMER_AV;
+        const ebaTimesFirst = getEbaTimes(baseAVCC, totalAA, true);
+        let lastCCActionAv = 0;
+        ebaTimesFirst.forEach((t, i) => {
+          const at = ccStart + t;
+          rowsA.push(buildRow(idxA++, `EBA ${i + 1}`, at, 'event-eba'));
+          lastCCActionAv = at;
+        });
         rowsA.push(buildRow(idxA++, 'CC ends', ccEnd, 'event-cc'));
 
-        const passedLoop = ccEnd - lastCCActionAvLoop;
-        const remainingOldLoop = Math.max(0, baseAVCC - passedLoop);
-        const scaleLoop = spdCC / spdOut;
-        const newRemainingLoop = remainingOldLoop * scaleLoop;
-        loopSkillTimeA = ccEnd + newRemainingLoop;
-        skillIndexA++;
-        rowsA.push(buildRow(idxA++, `Skill ${skillIndexA} (post-CC)`, loopSkillTimeA, 'event-skill'));
-
-        if (loopSkillTimeA > MAX_AV) {
-          break;
+        let skillIndexA = 0;
+        let postCCSkillTimeA = null;
+        if (lastCCActionAv > 0) {
+          const passed = ccEnd - lastCCActionAv;
+          const remainingOld = Math.max(0, baseAVCC - passed);
+          const scale = spdCC / spdOut;
+          const newRemaining = remainingOld * scale;
+          postCCSkillTimeA = ccEnd + newRemaining;
+          skillIndexA++;
+          rowsA.push(buildRow(idxA++, `Skill ${skillIndexA} (post-CC)`, postCCSkillTimeA, 'event-skill'));
         }
 
-        cycleA++;
-      }
+        let cycleA = 2;
+        let loopSkillTimeA = postCCSkillTimeA;
 
-      // Scenario B
-      const rowsB = [];
-      let idxB = 1;
-      rowsB.push(buildRow(idxB++, 'Phase start (no CC)', 0, 'event-phase'));
+        while (loopSkillTimeA != null) {
+          rowsA.push(buildRow(idxA++, `Ult & EBA 1 (ult ${cycleA})`, loopSkillTimeA, 'event-ult'));
 
-      const skill1Av = baseAVOut;
-      let skillIndexB = 0;
-      skillIndexB++;
-      rowsB.push(buildRow(idxB++, `Skill ${skillIndexB} (opening)`, skill1Av, 'event-skill'));
+          ccStart = loopSkillTimeA;
+          ccEnd = ccStart + CC_TIMER_AV;
 
-      let ccStartB = skill1Av;
-      let ccEndB = ccStartB + CC_TIMER_AV;
-      rowsB.push(buildRow(idxB++, 'Ult & EBA 1 (ult 1)', ccStartB, 'event-ult'));
-
-      let currentActAvB = ccStartB;
-      let lastCCActionAvB = ccStartB;
-      let eIndexB = 2;
-
-      while (true) {
-        let deltaB = baseAVCC;
-        if (ddd > 0 && eIndexB === 2) {
-          deltaB = baseAVCC * (1 - dddReduction * ddd);
-        }
-        const nextB = currentActAvB + deltaB;
-        if (nextB >= ccEndB - eps) break;
-        rowsB.push(buildRow(idxB++, `EBA ${eIndexB}`, nextB, 'event-eba'));
-        lastCCActionAvB = nextB;
-        currentActAvB = nextB;
-        eIndexB++;
-      }
-      rowsB.push(buildRow(idxB++, 'CC ends', ccEndB, 'event-cc'));
-
-      let postCCSkillTimeB = null;
-      if (lastCCActionAvB > 0) {
-        const passedB = ccEndB - lastCCActionAvB;
-        const remainingOldB = Math.max(0, baseAVCC - passedB);
-        const scaleB = spdCC / spdOut;
-        const newRemainingB = remainingOldB * scaleB;
-        postCCSkillTimeB = ccEndB + newRemainingB;
-        skillIndexB++;
-        rowsB.push(buildRow(idxB++, `Skill ${skillIndexB} (post-CC)`, postCCSkillTimeB, 'event-skill'));
-      }
-
-      let cycleB = 2;
-      let loopSkillTimeB = postCCSkillTimeB;
-
-      while (loopSkillTimeB != null) {
-        rowsB.push(buildRow(idxB++, `Ult & EBA 1 (ult ${cycleB})`, loopSkillTimeB, 'event-ult'));
-
-        ccStartB = loopSkillTimeB;
-        ccEndB = ccStartB + CC_TIMER_AV;
-
-        let currentActAvLoopB = ccStartB;
-        let lastCCActionAvLoopB = ccStartB;
-        let eIndexLoopB = 2;
-
-        while (true) {
-          let deltaLoopB = baseAVCC;
-          if (ddd > 0 && eIndexLoopB === 2) {
-            deltaLoopB = baseAVCC * (1 - dddReduction * ddd);
+          const ebaTimesLoop = getEbaTimes(baseAVCC, totalAA, false);
+          let lastCCActionAvLoop = ccStart;
+          for (let j = 1; j < ebaTimesLoop.length; j++) {
+            const at = ccStart + ebaTimesLoop[j];
+            rowsA.push(buildRow(idxA++, `EBA ${j + 1}`, at, 'event-eba'));
+            lastCCActionAvLoop = at;
           }
-          const nextLoopB = currentActAvLoopB + deltaLoopB;
-          if (nextLoopB >= ccEndB - eps) break;
-          rowsB.push(buildRow(idxB++, `EBA ${eIndexLoopB}`, nextLoopB, 'event-eba'));
-          lastCCActionAvLoopB = nextLoopB;
-          currentActAvLoopB = nextLoopB;
-          eIndexLoopB++;
+          rowsA.push(buildRow(idxA++, 'CC ends', ccEnd, 'event-cc'));
+
+          const passedLoop = ccEnd - lastCCActionAvLoop;
+          const remainingOldLoop = Math.max(0, baseAVCC - passedLoop);
+          const scaleLoop = spdCC / spdOut;
+          const newRemainingLoop = remainingOldLoop * scaleLoop;
+          loopSkillTimeA = ccEnd + newRemainingLoop;
+          skillIndexA++;
+          rowsA.push(buildRow(idxA++, `Skill ${skillIndexA} (post-CC)`, loopSkillTimeA, 'event-skill'));
+
+          if (loopSkillTimeA > MAX_AV) {
+            break;
+          }
+
+          cycleA++;
+        }
+
+        // Scenario B
+        let idxB = 1;
+        rowsB.push(buildRow(idxB++, 'Phase start (no CC)', 0, 'event-phase'));
+
+        const skill1Av = baseAVOut;
+        let skillIndexB = 0;
+        skillIndexB++;
+        rowsB.push(buildRow(idxB++, `Skill ${skillIndexB} (opening)`, skill1Av, 'event-skill'));
+
+        let ccStartB = skill1Av;
+        let ccEndB = ccStartB + CC_TIMER_AV;
+        rowsB.push(buildRow(idxB++, 'Ult & EBA 1 (ult 1)', ccStartB, 'event-ult'));
+
+        const ebaTimesFirstB = getEbaTimes(baseAVCC, totalAA, false);
+        let lastCCActionAvB = ccStartB;
+        for (let j = 1; j < ebaTimesFirstB.length; j++) {
+          const at = ccStartB + ebaTimesFirstB[j];
+          rowsB.push(buildRow(idxB++, `EBA ${j + 1}`, at, 'event-eba'));
+          lastCCActionAvB = at;
         }
         rowsB.push(buildRow(idxB++, 'CC ends', ccEndB, 'event-cc'));
 
-        const passedLoopB = ccEndB - lastCCActionAvLoopB;
-        const remainingOldLoopB = Math.max(0, baseAVCC - passedLoopB);
-        const scaleLoopB = spdCC / spdOut;
-        const newRemainingLoopB = remainingOldLoopB * scaleLoopB;
-        loopSkillTimeB = ccEndB + newRemainingLoopB;
-        skillIndexB++;
-        rowsB.push(buildRow(idxB++, `Skill ${skillIndexB} (post-CC)`, loopSkillTimeB, 'event-skill'));
-
-        if (loopSkillTimeB > MAX_AV) {
-          break;
+        let postCCSkillTimeB = null;
+        if (lastCCActionAvB > 0) {
+          const passedB = ccEndB - lastCCActionAvB;
+          const remainingOldB = Math.max(0, baseAVCC - passedB);
+          const scaleB = spdCC / spdOut;
+          const newRemainingB = remainingOldB * scaleB;
+          postCCSkillTimeB = ccEndB + newRemainingB;
+          skillIndexB++;
+          rowsB.push(buildRow(idxB++, `Skill ${skillIndexB} (post-CC)`, postCCSkillTimeB, 'event-skill'));
         }
 
-        cycleB++;
+        let cycleB = 2;
+        let loopSkillTimeB = postCCSkillTimeB;
+
+        while (loopSkillTimeB != null) {
+          rowsB.push(buildRow(idxB++, `Ult & EBA 1 (ult ${cycleB})`, loopSkillTimeB, 'event-ult'));
+
+          ccStartB = loopSkillTimeB;
+          ccEndB = ccStartB + CC_TIMER_AV;
+
+          const ebaTimesLoopB = getEbaTimes(baseAVCC, totalAA, false);
+          let lastCCActionAvLoopB = ccStartB;
+          for (let j = 1; j < ebaTimesLoopB.length; j++) {
+            const at = ccStartB + ebaTimesLoopB[j];
+            rowsB.push(buildRow(idxB++, `EBA ${j + 1}`, at, 'event-eba'));
+            lastCCActionAvLoopB = at;
+          }
+          rowsB.push(buildRow(idxB++, 'CC ends', ccEndB, 'event-cc'));
+
+          const passedLoopB = ccEndB - lastCCActionAvLoopB;
+          const remainingOldLoopB = Math.max(0, baseAVCC - passedLoopB);
+          const scaleLoopB = spdCC / spdOut;
+          const newRemainingLoopB = remainingOldLoopB * scaleLoopB;
+          loopSkillTimeB = ccEndB + newRemainingLoopB;
+          skillIndexB++;
+          rowsB.push(buildRow(idxB++, `Skill ${skillIndexB} (post-CC)`, loopSkillTimeB, 'event-skill'));
+
+          if (loopSkillTimeB > MAX_AV) {
+            break;
+          }
+
+          cycleB++;
+        }
       }
 
       tableA.innerHTML = rowsA
         .map(r => {
           const band = getRangeClass(r.av, 'A');
-          return `<tr class="${r.cls} ${band}"><td>${r.n}</td><td>${r.event}</td><td class="av-col">${fmt(r.av)}</td></tr>`;
+          const aaAttr = r.aaHit ? ' data-aa-hit="1"' : '';
+          return `<tr class="${r.cls} ${band}"${aaAttr}><td>${r.n}</td><td>${r.event}</td><td class="av-col">${fmt(r.av)}</td></tr>`;
         })
         .join('');
 
       tableB.innerHTML = rowsB
         .map(r => {
           const band = getRangeClass(r.av, 'B');
-          return `<tr class="${r.cls} ${band}"><td>${r.n}</td><td>${r.event}</td><td class="av-col">${fmt(r.av)}</td></tr>`;
+          const aaAttr = r.aaHit ? ' data-aa-hit="1"' : '';
+          return `<tr class="${r.cls} ${band}"${aaAttr}><td>${r.n}</td><td>${r.event}</td><td class="av-col">${fmt(r.av)}</td></tr>`;
         })
         .join('');
 
@@ -1280,8 +1976,16 @@
     });
     rmToggle.addEventListener('change', calculate);
     dahliaToggle.addEventListener('change', calculate);
-    dddSelect.addEventListener('change', calculate);
-    dddRankSelect.addEventListener('change', calculate);
+    dddSelect.addEventListener('change', () => {
+      setDddMode('procs');
+      if (dddSelectModal) dddSelectModal.value = dddSelect.value;
+      calculate();
+    });
+    dddRankSelect.addEventListener('change', () => {
+      setDddMode('procs');
+      if (dddRankSelectModal) dddRankSelectModal.value = dddRankSelect.value;
+      calculate();
+    });
     e5Toggle.addEventListener('change', calculate);
     phainonSelect.addEventListener('change', calculate);
 
@@ -1310,6 +2014,67 @@
       });
     });
 
+    aaAddButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const scenario = btn.getAttribute('data-scenario');
+        const body = scenario === 'B' ? aaTableBodyB : aaTableBodyA;
+        addAaRow(body);
+        setDddMode('future');
+      });
+    });
+
+    function ensureAaInitialRows() {
+      if (aaTableBodyA && !aaTableBodyA.children.length) addAaRow(aaTableBodyA);
+      if (aaTableBodyB && !aaTableBodyB.children.length) addAaRow(aaTableBodyB);
+    }
+
+    if (dddSelectModal) {
+      dddSelectModal.addEventListener('change', () => {
+        setDddMode('procs');
+        syncMainFromDddModal();
+        calculate();
+      });
+    }
+    if (dddRankSelectModal) {
+      dddRankSelectModal.addEventListener('change', () => {
+        setDddMode('procs');
+        syncMainFromDddModal();
+        calculate();
+      });
+    }
+    if (dddOverrideInput) {
+      dddOverrideInput.addEventListener('input', () => {
+        setDddMode('override');
+        calculate();
+      });
+    }
+    if (dddModeRadios && dddModeRadios.length) {
+      dddModeRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+          refreshDddSectionStates();
+          calculate();
+        });
+      });
+    }
+    if (dddSettingsBtn) {
+      dddSettingsBtn.addEventListener('click', openDddModal);
+    }
+    if (dddModalClose) {
+      dddModalClose.addEventListener('click', closeDddModal);
+    }
+    if (dddModal) {
+      dddModal.addEventListener('click', (e) => {
+        if (e.target === dddModal) {
+          closeDddModal();
+        }
+      });
+    }
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeDddModal();
+      }
+    });
+
     function applyPinState() {
       if (!avPanel) return;
       if (panelPinned) {
@@ -1330,9 +2095,11 @@
       });
     }
 
+    ensureAaInitialRows();
     calculate();
     applyPinState();
+    syncDddModalFromMain();
+    refreshDddSectionStates();
   </script>
 </body>
 </html>
-
