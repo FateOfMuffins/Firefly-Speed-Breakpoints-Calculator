@@ -22,6 +22,7 @@
       --lav: #7a8ac4;
       --ember: #ff8a3d;
       --control: rgba(90, 201, 255, 0.54);        /* eye teal */
+      
       --control-strong: rgba(244, 176, 209, 0.54);/* eye pink */
       --control-border: rgba(255, 255, 255, 0.28);
       --bright-green: #c7e36a;
@@ -296,7 +297,7 @@
 
     /* Modal override input text color */
     #dddOverrideInput { color: #000000; }
-
+    
     select {
       padding: 4px 10px;
       border-radius: 10px;
@@ -307,12 +308,17 @@
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
       height: 20px;
       text-indent: 1px;
+      
+      /*Forcing the background color to avoid OS-level theming issues. Not happy about this one, but this is something you can tweak.*/
+      background-color: #646464 !important;
     }
     select option {
       color: #000000;
       background: #ffffff;
-    }
-
+      /* Added some ovrride to ensure readability */
+      text-shadow: none;
+      font-weight: normal;
+    } 
     .toggle-inline {
       flex: 1 1 100%;
       display: flex;
